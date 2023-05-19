@@ -1,6 +1,6 @@
 package utils.baseperson
 
-abstract class BasePerson{
+abstract class BasePerson {
     String name
 
     String email
