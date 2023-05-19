@@ -15,9 +15,9 @@ abstract class BasePerson {
 
     String district
 
-    String street
+    String address
 
-    String houseNumber
+    String addressNumber
     
     String complement
 }
