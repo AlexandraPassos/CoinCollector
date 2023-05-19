@@ -1,6 +1,6 @@
 package com.coinCollector
 
-import utils.baseperson.BasePerson
+import utils.basePerson.BasePerson
 
 class Payer extends BasePerson {
     String phoneNumber
