@@ -2,6 +2,7 @@ package utils.baseperson
 
 abstract class BasePerson{
     String name
+
     String email
     String cpfCnpj
     String cep
