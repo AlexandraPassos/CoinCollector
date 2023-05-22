@@ -2,10 +2,14 @@ package utils.basePerson
 
 import utils.baseEntity.BaseEntity
 
+import utils.personType.PersonType
+
 abstract class BasePerson extends BaseEntity {
     String name
 
     String email
+
+    PersonType personType
 
     String cpfCnpj
 
@@ -22,4 +26,8 @@ abstract class BasePerson extends BaseEntity {
     String addressNumber
     
     String complement
+
+    static mapping = {
+        personType enumType: 'string'
+    }
 }
