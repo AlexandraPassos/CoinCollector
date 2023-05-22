@@ -2,7 +2,7 @@ package utils.basePerson
 
 import utils.baseEntity.BaseEntity
 
-abstract class BasePerson extends BaseEntity{
+abstract class BasePerson extends BaseEntity {
     String name
 
     String email
