@@ -1,9 +1,12 @@
 package utils.personType
 
+import groovy.transform.CompileStatic
+
+@CompileStatic
 enum PersonType { 
-    PJ('Pessoa Física'),
+    PF('Pessoa Física'),
     
-    PF('Pessoa Jurídica'),
+    PJ('Pessoa Jurídica'),
 
     final String id
     PersonType(String id) { this.id = id }
