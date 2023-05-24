@@ -1,5 +1,8 @@
 package utils.personType
 
+import groovy.transform.CompileStatic
+
+@CompileStatic
 enum PersonType { 
     PJ('Pessoa Jurídica'),
     
