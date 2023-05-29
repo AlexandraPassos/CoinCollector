@@ -27,6 +27,8 @@ abstract class BasePerson extends BaseEntity {
     
     String complement
 
+    String phoneNumber
+
     static mapping = {
         personType enumType: 'string'
     }
