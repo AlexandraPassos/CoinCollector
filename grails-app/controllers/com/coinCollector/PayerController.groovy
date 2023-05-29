@@ -1,6 +1,13 @@
 package com.coinCollector
 
-class PayerController {
+import com.coinCollector.Payer
 
-    def index() { }
+class PayerController {
+   
+    def payerService
+
+    def save() {
+        payerService.save(params)
+    }
 }
+    
