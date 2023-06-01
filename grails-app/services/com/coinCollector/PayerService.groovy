@@ -1,11 +1,23 @@
 package com.coinCollector
 
-import grails.gorm.transactions.Transactional
+import com.coinCollector.Payer
 
-@Transactional
-class PayerService {
+class PayerController {
+   
+    def payerService
 
-    def serviceMethod() {
+    def index() {
+        return [:]
+    }
 
+    def create() {
+        return [:]
+     }
+
+    def save() {
+        payerService.save(params)
+        flash.message = "Pagador registrado com sucesso"
+        redirect(action: 'index')
+        
     }
 }
