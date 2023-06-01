@@ -8,10 +8,6 @@ enum PersonType {
     
     PF('Pessoa Física'),
 
-    public static PersonType convert(String personType) {
-        return personType as PersonType
-    }
-
     final String id
     PersonType(String id) { this.id = id }
 }
