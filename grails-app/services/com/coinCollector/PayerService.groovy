@@ -2,16 +2,26 @@ package com.coinCollector
 
 import grails.gorm.transactions.Transactional
 import com.coinCollector.Payer
+import utils.personType.PersonType
+import utils.cpfCnpj.CpfCnpjUtils 
 
 @Transactional
 class PayerService {
-
     public void save(Map params) {
-        Payer payer = new Payer()
+        
+        String validCpfCnpj
+
+        if(PersonType.convert(params.personType) == PersonType.PF) {
+            validCpfCnpj = CpfCnpjUtils.cpfIsValid(params.cpfCnpj)
+        } else {
+            validCpfCnpj = CpfCnpjUtils.cnpjIsValid(params.cpfCnpj)
+        }
+
+        Payer payer = new Payer()   
         payer.name = params.name
         payer.email = params.email
         payer.personType = params.personType
-        payer.cpfCnpj = params.cpfCnpj
+        payer.cpfCnpj = validCpfCnpj
         payer.cep = params.cep
         payer.state = params.state
         payer.city = params.city
@@ -20,6 +30,7 @@ class PayerService {
         payer.addressNumber = params.addressNumber
         payer.complement = params.complement
         payer.phoneNumber = params.phoneNumber
+        payer.customer = Customer.findById(1)
         payer.save(failOnError: true)
     }
 }
