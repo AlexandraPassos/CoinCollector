@@ -18,19 +18,19 @@
 
         <div>
             <label for="personType">Tipo de Pagador:</label>
-            <input type="radio" name="personType" id="pfRadio" value="PF" onchange="validatePersonType()" checked> <label for="pfRadio">Pessoa Física</label>
-            <input type="radio" name="personType" id="pjRadio" value="PJ" onchange="validatePersonType()"> <label for="pjRadio">Pessoa Jurídica</label>
+            <input type="radio" name="personType" id="pfRadio" value="PF" onchange="changePersonType()" checked> <label for="pfRadio">Pessoa Física</label>
+            <input type="radio" name="personType" id="pjRadio" value="PJ" onchange="changePersonType()"> <label for="pjRadio">Pessoa Jurídica</label>
 
             <div id="cpfCnpj-container">
                 <label for="cpfCnpj" id="cpfCnpj-label">CPF:</label>
-                <input type="text" name="cpfCnpj" placeholder="123.456.789-12" maxLength = 14 id="cpfCnpj">
+                <input type="text" name="cpfCnpj" placeholder="123.456.789-12" maxLength=14 id="cpfCnpj">
             </div>
 
         </div>
 
         <div>
             <label for="cep">CEP:</label>
-            <input type="text" name="cep" placeholder="12345-678" maxLength = 9 id="cep"/>
+            <input type="text" name="cep" placeholder="12345-678" maxLength=9 id="cep"/>
         </div>
 
         <div>
@@ -73,7 +73,7 @@
     </form>
 
         <script>
-            function validatePersonType() {
+            function changePersonType() {
                 var personType = document.querySelector('input[name="personType"]:checked').value;
                 var cpfCnpjInputReference = document.getElementById("cpfCnpj")
                 var cpfCnpjContainer = document.getElementById("cpfCnpj-container");
