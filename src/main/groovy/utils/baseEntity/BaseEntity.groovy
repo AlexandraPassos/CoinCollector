@@ -5,10 +5,9 @@ abstract class BaseEntity {
 
     Date lastUpdated
     
-    Boolean deleted
+    Boolean deleted = false
 
     static mapping = {
         tablePerHierarchy false
-        deleted defaultValue: false
     }
 }
