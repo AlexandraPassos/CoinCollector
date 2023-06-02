@@ -1,7 +1,5 @@
 package com.coinCollector
 
-import com.coinCollector.Payer
-
 class PayerController {
    
     def payerService
@@ -18,7 +16,5 @@ class PayerController {
         payerService.save(params)
         flash.message = "Pagador registrado com sucesso"
         redirect(action: 'index')
-        
     }
-}
-    
+}  
