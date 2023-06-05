@@ -13,14 +13,18 @@ class PayerService {
 
         if(PersonType.convert(params.personType) == PersonType.PF) {
             if(CpfCnpjUtils.cpfIsValid(params.cpfCnpj)) {
-                validCpfCnpj = params.cpfCnpj    
+                validCpfCnpj = params.cpfCnpj
+            } else {
+                return
             }
         } else {
             if(CpfCnpjUtils.cnpjIsValid(params.cpfCnpj)) {
-                validCpfCnpj = params.cpfCnpj    
+                validCpfCnpj = params.cpfCnpj
+            } else {
+                return
             }
         }
-
+        
         Payer payer = new Payer()   
         payer.name = params.name
         payer.email = params.email

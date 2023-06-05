@@ -1,19 +1,24 @@
 package utils.cpfCnpj
 
 import java.lang.String
+import utils.formattingParameters.FormattingParameters
 
 class CpfCnpjUtils {
-    public static final int cnpjLength = 14
-    public static final int cpfLength = 11
+    public static final Integer cpfLength = 11
+    public static final Integer cnpjLength = 14
 
     public static Boolean cpfIsValid(String cpf) {
+                
+        cpf = FormattingParameters.removeSpecialCharacters(cpf)
+        if(!FormattingParameters.expectedLength(cpf, cpfLength)) return false
+        if(!FormattingParameters.repeatSameCharacter(cpf, cpfLength)) return false
         
-        int firstWeightedSum = 0, secondeWeightedSum = 0, firstDigit = 0, secondDigit = 0, rest = 0, cpfDigit
+        Integer firstWeightedSum = 0, secondWeightedSum = 0, firstDigit = 0, secondDigit = 0, rest = 0, cpfDigit
 
-        for (int counter = 1; counter < cpf.length() - 1; counter++) {
+        for (Integer counter = 1; counter < cpf.length() - 1; counter++) {
             cpfDigit = Integer.valueOf(cpf.substring(counter - 1, counter)).intValue()
             firstWeightedSum = firstWeightedSum + (11 - counter) * cpfDigit
-            secondeWeightedSum = secondeWeightedSum + (12 - counter) * cpfDigit
+            secondWeightedSum = secondWeightedSum + (12 - counter) * cpfDigit
         }
 
         rest = (firstWeightedSum % 11)
@@ -24,9 +29,9 @@ class CpfCnpjUtils {
             firstDigit = 11 - rest
         }
 
-        secondeWeightedSum += 2 * firstDigit
+        secondWeightedSum += 2 * firstDigit
 
-        rest = (secondeWeightedSum % 11)
+        rest = (secondWeightedSum % 11)
 
         if (rest < 2) {
           secondDigit = 0
@@ -41,17 +46,21 @@ class CpfCnpjUtils {
         if (nDigVerify.equals(nDigResult)) {
             return true
         } else {
-            return 
+            return false
         }
     }
-
+    
     public static Boolean cnpjIsValid(String cnpj) {
+        
+        cnpj = FormattingParameters.removeSpecialCharacters(cnpj)
+        if(!FormattingParameters.expectedLength(cnpj, cnpjLength)) return false
+        if(!FormattingParameters.repeatSameCharacter(cnpj, cnpjLength)) return false
 
-        char thirteenthDigit, fourteenthDigit
-        int number, weight = 2 , sum = 0
+        Character thirteenthDigit, fourteenthDigit
+        Integer number, weight = 2 , sum = 0
 
-        for (int counter = 11; counter >= 0; counter--) {
-            number = (int) (cnpj.charAt(counter) - 48)
+        for (Integer counter = 11; counter >= 0; counter--) {
+            number = (Integer) (cnpj.charAt(counter) - 48)
             sum = sum + (number * weight)
             weight = weight + 1
             if (weight == 10) {
@@ -59,19 +68,19 @@ class CpfCnpjUtils {
             }
         }
 
-        int rest = sum % 11
+        Integer rest = sum % 11
 
         if ((rest == 0) || (rest == 1)) {
             thirteenthDigit = '0'
         } else {
-            thirteenthDigit = (char) ((11 - rest) + 48)
+            thirteenthDigit = (Character) ((11 - rest) + 48)
         }
 
         sum = 0
         weight = 2
 
-        for (int counter = 12; counter >= 0; counter--) {
-            number = (int) (cnpj.charAt(counter) - 48)
+        for (Integer counter = 12; counter >= 0; counter--) {
+            number = (Integer) (cnpj.charAt(counter) - 48)
             sum = sum + (number * weight)
             weight = weight + 1
             if (weight == 10) {
@@ -84,13 +93,13 @@ class CpfCnpjUtils {
         if ((rest == 0) || (rest == 1)) {
             fourteenthDigit = '0'
         } else {
-            fourteenthDigit = (char) ((11 - rest) + 48)
+            fourteenthDigit = (Character) ((11 - rest) + 48)
         }
           
         if ((thirteenthDigit == cnpj.charAt(12)) && (fourteenthDigit == cnpj.charAt(13))) {
             return true
         } else {
-            return
+            return false
         } 
     }
 
