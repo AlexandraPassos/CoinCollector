@@ -16,12 +16,6 @@ class PhoneNumberUtils {
 
         if(cleanedPhoneNumber[2] != "9") return false
     
-        String referenceDigit= cleanedPhoneNumber[3]
-        for(Integer index = 4; index < cleanedPhoneNumber.size(); index++) {
-            if(cleanedPhoneNumber[index] != referenceDigit) {
-                return true
-            }
-        }
-        return false
+        return true
     }
 }
