@@ -4,6 +4,7 @@
     <title>Registrar Novo Pagador</title>
 </head>
 <body>
+    <g:message code="${flash.message}"/>
     <h1>Registro de Novo Pagador</h1>
     <form action="${createLink(controller: 'payer', action: 'save')}" method="post">
         <div>
@@ -72,24 +73,24 @@
 
     </form>
 
-        <script>
-            function changePersonType() {
-                var personType = document.querySelector('input[name="personType"]:checked').value;
-                var cpfCnpjInputReference = document.getElementById("cpfCnpj");
-                var cpfCnpjContainer = document.getElementById("cpfCnpj-container");
-                var cpfCnpjLabelReference = document.getElementById("cpfCnpj-label");
+    <script>
+        function changePersonType() {
+            var personType = document.querySelector('input[name="personType"]:checked').value;
+            var cpfCnpjInputReference = document.getElementById("cpfCnpj");
+            var cpfCnpjContainer = document.getElementById("cpfCnpj-container");
+            var cpfCnpjLabelReference = document.getElementById("cpfCnpj-label");
 
-                if (personType === "PF") {
-                    cpfCnpjLabelReference.innerHTML='CPF:';
-                    cpfCnpjInputReference.placeholder='123.456.789-12';
-                    cpfCnpjInputReference.maxLength = 14; 
-                } else if (personType === "PJ") {
-                    cpfCnpjLabelReference.innerHTML='CNPJ:';
-                    cpfCnpjInputReference.placeholder='12.345.678/0001-00';
-                    cpfCnpjInputReference.maxLength = 18; 
-                }
+            if (personType === "PF") {
+                cpfCnpjLabelReference.innerHTML='CPF:';
+                cpfCnpjInputReference.placeholder='123.456.789-12';
+                cpfCnpjInputReference.maxLength = 14; 
+            } else if (personType === "PJ") {
+                cpfCnpjLabelReference.innerHTML='CNPJ:';
+                cpfCnpjInputReference.placeholder='12.345.678/0001-00';
+                cpfCnpjInputReference.maxLength = 18; 
             }
-        </script>
-
+        }
+    </script>
+    
 </body>
 </html>
