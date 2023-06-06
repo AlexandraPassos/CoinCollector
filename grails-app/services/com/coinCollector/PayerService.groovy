@@ -6,7 +6,7 @@ import utils.personType.PersonType
 import utils.cpfCnpj.CpfCnpjUtils 
 import utils.phoneNumber.PhoneNumberUtils 
 import utils.name.NameUtils 
-
+import utils.email.EmailUtils 
 
 @Transactional
 class PayerService {
@@ -15,20 +15,13 @@ class PayerService {
         String validCpfCnpj
         String validPhoneNumber
         String validName
+        String validEmail
 
-        if(PersonType.convert(params.personType) == PersonType.PF) {
-            if(CpfCnpjUtils.cpfIsValid(params.cpfCnpj)) {
-                validCpfCnpj = params.cpfCnpj
-            } else {
-                return
-            }
-        } else {
-            if(CpfCnpjUtils.cnpjIsValid(params.cpfCnpj)) {
-                validCpfCnpj = params.cpfCnpj
-            } else {
-                return
-            }
-        }
+        if(PersonType.convert(params.personType) == PersonType.PF && !CpfCnpjUtils.cpfIsValid(params.cpfCnpj)) return
+
+        if(PersonType.convert(params.personType) == PersonType.PJ && !CpfCnpjUtils.cnpjIsValid(params.cpfCnpj)) return 
+
+        validCpfCnpj = params.cpfCnpj
 
         if(PhoneNumberUtils.phoneNumberIsValid(params.phoneNumber)) {
             validPhoneNumber = params.phoneNumber
@@ -41,10 +34,16 @@ class PayerService {
         } else {
             return
         }
-        
+
+        if(EmailUtils.emailIsValid(params.email)) {
+            validEmail = params.email
+        } else {
+            return
+        }
+
         Payer payer = new Payer()   
         payer.name = validName
-        payer.email = params.email
+        payer.email = validEmail
         payer.personType = params.personType
         payer.cpfCnpj = validCpfCnpj
         payer.cep = params.cep
