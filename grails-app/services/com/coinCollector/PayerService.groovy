@@ -5,6 +5,8 @@ import com.coinCollector.Payer
 import utils.personType.PersonType
 import utils.cpfCnpj.CpfCnpjUtils 
 import utils.phoneNumber.PhoneNumberUtils 
+import utils.name.NameUtils 
+
 
 @Transactional
 class PayerService {
@@ -12,6 +14,7 @@ class PayerService {
 
         String validCpfCnpj
         String validPhoneNumber
+        String validName
 
         if(PersonType.convert(params.personType) == PersonType.PF) {
             if(CpfCnpjUtils.cpfIsValid(params.cpfCnpj)) {
@@ -32,9 +35,15 @@ class PayerService {
         } else {
             return 
         }
+
+        if(NameUtils.nameIsValid(params.name)) {
+            validName = params.name
+        } else {
+            return
+        }
         
         Payer payer = new Payer()   
-        payer.name = params.name
+        payer.name = validName
         payer.email = params.email
         payer.personType = params.personType
         payer.cpfCnpj = validCpfCnpj

@@ -9,13 +9,10 @@ class PhoneNumberUtils {
     public static Boolean phoneNumberIsValid(String phoneNumber) {
 
         String cleanedPhoneNumber = FormattingParameters.removeSpecialCharacters(phoneNumber)
-        println(cleanedPhoneNumber)
 
         if(!FormattingParameters.expectedLength(cleanedPhoneNumber, phoneNumberLength)) return false
-        println(FormattingParameters.expectedLength(cleanedPhoneNumber, phoneNumberLength))
 
         if(!areaCode.contains(cleanedPhoneNumber[0..1] as Integer)) return false
-        println(areaCode.contains(cleanedPhoneNumber[0..1] as Integer))
 
         if(cleanedPhoneNumber[2] != "9") return false
     
