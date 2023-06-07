@@ -12,40 +12,17 @@ import utils.email.EmailUtils
 class PayerService {
     public void save(Map params) {
 
-        String validCpfCnpj
-        String validPhoneNumber
-        String validName
-        String validEmail
-
         if(PersonType.convert(params.personType) == PersonType.PF && !CpfCnpjUtils.cpfIsValid(params.cpfCnpj)) return
-
         if(PersonType.convert(params.personType) == PersonType.PJ && !CpfCnpjUtils.cnpjIsValid(params.cpfCnpj)) return 
-
-        validCpfCnpj = params.cpfCnpj
-
-        if(PhoneNumberUtils.phoneNumberIsValid(params.phoneNumber)) {
-            validPhoneNumber = params.phoneNumber
-        } else {
-            return 
-        }
-
-        if(NameUtils.nameIsValid(params.name)) {
-            validName = params.name
-        } else {
-            return
-        }
-
-        if(EmailUtils.emailIsValid(params.email)) {
-            validEmail = params.email
-        } else {
-            return
-        }
+        if (!PhoneNumberUtils.phoneNumberIsValid(params.phoneNumber)) return
+        if (!NameUtils.nameIsValid(params.name)) return
+        if (!EmailUtils.emailIsValid(params.email)) return
 
         Payer payer = new Payer()   
-        payer.name = validName
-        payer.email = validEmail
+        payer.name = params.name
+        payer.email = params.email
         payer.personType = params.personType
-        payer.cpfCnpj = validCpfCnpj
+        payer.cpfCnpj = params.cpfCnpj
         payer.cep = params.cep
         payer.state = params.state
         payer.city = params.city
@@ -53,7 +30,7 @@ class PayerService {
         payer.address = params.address
         payer.addressNumber = params.addressNumber
         payer.complement = params.complement
-        payer.phoneNumber = validPhoneNumber
+        payer.phoneNumber = params.phoneNumber
         payer.customer = Customer.findById(1)
         payer.save(failOnError: true)
     }
