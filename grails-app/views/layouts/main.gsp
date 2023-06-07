@@ -31,7 +31,10 @@
     </div>
 </nav>
 
-<g:layoutBody/>
+<div>
+    <g:message code="${flash.message}"/>
+    <g:layoutBody/>
+</div>
 
 <div class="footer" role="contentinfo">
     <div class="container-fluid">
