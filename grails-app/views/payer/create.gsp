@@ -4,7 +4,6 @@
     <title>Registrar Novo Pagador</title>
 </head>
 <body>
-    <g:message code="${flash.message}"/>
     <h1>Registro de Novo Pagador</h1>
     <form action="${createLink(controller: 'payer', action: 'save')}" method="post">
         <div>
