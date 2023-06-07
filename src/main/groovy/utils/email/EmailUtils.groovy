@@ -6,8 +6,6 @@ class EmailUtils {
 
         String parameterEmail = email
 
-        if(parameterEmail.isEmpty()) return false
-        if(!parameterEmail.matches(/^[a-z0-9\-\.]+@+[a-z0-9]+(\.com)?(\.br)/)) return false
-        return true
+        return !(parameterEmail.isEmpty()) && parameterEmail.matches(/^[a-z0-9\-\.]+@+[a-z0-9]+(\.com)?(\.br)/)
     }
 }

@@ -43,11 +43,7 @@ class CpfCnpjUtils {
 
         String nDigResult = String.valueOf(firstDigit) + String.valueOf(secondDigit)
 
-        if (nDigVerify.equals(nDigResult)) {
-            return true
-        } else {
-            return false
-        }
+        return nDigVerify.equals(nDigResult)
     }
     
     public static Boolean cnpjIsValid(String cnpj) {
@@ -96,11 +92,6 @@ class CpfCnpjUtils {
             fourteenthDigit = (Character) ((11 - rest) + 48)
         }
           
-        if ((thirteenthDigit == cleanedCnpj.charAt(12)) && (fourteenthDigit == cleanedCnpj.charAt(13))) {
-            return true
-        } else {
-            return false
-        } 
+        return (thirteenthDigit == cleanedCnpj.charAt(12)) && (fourteenthDigit == cleanedCnpj.charAt(13)) 
     }
-
 }

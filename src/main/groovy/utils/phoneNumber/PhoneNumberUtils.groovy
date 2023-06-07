@@ -10,12 +10,6 @@ class PhoneNumberUtils {
 
         String cleanedPhoneNumber = FormattingParameters.removeSpecialCharacters(phoneNumber)
 
-        if(!FormattingParameters.expectedLength(cleanedPhoneNumber, phoneNumberLength)) return false
-
-        if(!areaCode.contains(cleanedPhoneNumber[0..1] as Integer)) return false
-
-        if(cleanedPhoneNumber[2] != "9") return false
-    
-        return true
+        return FormattingParameters.expectedLength(cleanedPhoneNumber, phoneNumberLength) && areaCode.contains(cleanedPhoneNumber[0..1] as Integer) && cleanedPhoneNumber[2] == "9"
     }
 }
