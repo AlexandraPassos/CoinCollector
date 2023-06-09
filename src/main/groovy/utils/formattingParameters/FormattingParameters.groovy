@@ -4,8 +4,8 @@ class FormattingParameters {
 
     public static String removeSpecialCharacters(String parameter) {
         if (parameter.isEmpty()) return parameter
-            parameter = parameter.replaceAll("[^0-9]", "")
-            return parameter
+        parameter = parameter.replaceAll("[^0-9]", "")
+        return parameter
     }
 
     public static Boolean expectedLength(String parameter, Integer parameterLength) {
