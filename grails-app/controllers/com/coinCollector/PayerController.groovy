@@ -1,5 +1,7 @@
 package com.coinCollector
 
+import grails.validation.ValidationException
+
 class PayerController {
    
     def payerService
@@ -13,8 +15,16 @@ class PayerController {
      }
 
     def save() {
-        payerService.save(params)
-        flash.message = "Pagador registrado com sucesso"
-        redirect(action: 'index')
+        try {
+            payerService.save(params)
+            flash.message = "Pagador registrado com sucesso"
+            redirect(action: 'index')
+        } catch (ValidationException validationException) {
+            flash.message = "Um erro ocorreu durante o registro de pagador: ${validationException.message}"
+            redirect(action: 'create')
+        } catch (Exception exception) {
+            flash.error = "Um erro inesperado ocorreu. Por favor, contate o suporte"
+            redirect(action: 'create')
+        }
     }
-}  
+}
