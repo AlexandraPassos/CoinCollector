@@ -6,7 +6,8 @@ import utils.personType.PersonType
 import utils.cpfCnpj.CpfCnpjUtils 
 import utils.phoneNumber.PhoneNumberUtils 
 import utils.name.NameUtils 
-import utils.email.EmailUtils 
+import utils.email.EmailUtils
+import grails.validation.ValidationException
 
 @Transactional
 class PayerService {
@@ -33,5 +34,14 @@ class PayerService {
         payer.phoneNumber = params.phoneNumber
         payer.customer = Customer.findById(1)
         payer.save(failOnError: true)
+    }
+
+    def getAllPayers() {
+        Payer.list()
+    }
+
+    def getPayerById(Long id) {
+    def payer = Payer.get(id)
+    return payer
     }
 }
