@@ -15,11 +15,12 @@ class PayerService {
 
         if(PersonType.convert(params.personType) == PersonType.PF && !CpfCnpjUtils.cpfIsValid(params.cpfCnpj)) return
         if(PersonType.convert(params.personType) == PersonType.PJ && !CpfCnpjUtils.cnpjIsValid(params.cpfCnpj)) return 
-        if (!PhoneNumberUtils.phoneNumberIsValid(params.phoneNumber)) return
-        if (!NameUtils.nameIsValid(params.name)) return
-        if (!EmailUtils.emailIsValid(params.email)) return
+        if(!PhoneNumberUtils.phoneNumberIsValid(params.phoneNumber)) return
+        if(!NameUtils.nameIsValid(params.name)) return
+        if(!EmailUtils.emailIsValid(params.email)) return
 
-        Payer payer = new Payer()   
+        Payer payer = new Payer()  
+        payer.id = params.id 
         payer.name = params.name
         payer.email = params.email
         payer.personType = params.personType
@@ -36,12 +37,9 @@ class PayerService {
         payer.save(failOnError: true)
     }
 
-    def getAllPayers() {
-        Payer.list()
-    }
-
-    def getPayerById(Long id) {
-    def payer = Payer.get(id)
-    return payer
+    public void delete(Map params) {
+        Payer payer = Payer.findById(params.id)
+        payer.deleted = true
+        payer.save(failOnError: true)
     }
 }

@@ -4,6 +4,9 @@ import utils.baseEntity.BaseEntity
 
 import utils.personType.PersonType
 
+import grails.gorm.dirty.checking.DirtyCheck
+
+@DirtyCheck
 abstract class BasePerson extends BaseEntity {
     String name
 

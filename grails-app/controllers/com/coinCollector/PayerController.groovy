@@ -7,12 +7,12 @@ class PayerController {
     def payerService
 
     def index() {
-        def payerList = payerService.getAllPayers()
+        def payerList = Payer.list(params).findAll({ !it.deleted })
         [payerList: payerList]
     }
 
-     def show(Long id) {
-        def payer = payerService.getPayerById(id)
+    def show(Long id) {
+        def payer = Payer.get(id)
         [payer: payer]
     }
 
@@ -32,5 +32,9 @@ class PayerController {
             flash.error = "Um erro inesperado ocorreu. Por favor, contate o suporte"
             redirect(action: 'create')
         }
+    }
+
+    def delete() {
+        payerService.delete(params)
     }
 }
