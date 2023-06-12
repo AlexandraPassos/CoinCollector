@@ -3,6 +3,7 @@
     <head>
         <meta name="layout" content="main" >
         <title>Editar Pagador</title>
+        <asset:javascript src="changePersonType.js"/>
     </head>
     <body>
         <g:if test="${payer}">
@@ -71,28 +72,7 @@
             </div>
 
             <button type="submit" value="update">Salvar</button>
-
         </form>
         </g:if>
-
-        <script>
-            function changePersonType() {
-                var personType = document.querySelector('input[name="personType"]:checked').value;
-                var cpfCnpjInputReference = document.getElementById("cpfCnpj");
-                var cpfCnpjContainer = document.getElementById("cpfCnpj-container");
-                var cpfCnpjLabelReference = document.getElementById("cpfCnpj-label");
-
-                if (personType === "PF") {
-                    cpfCnpjLabelReference.innerHTML='CPF:';
-                    cpfCnpjInputReference.placeholder='123.456.789-12';
-                    cpfCnpjInputReference.maxLength = 14; 
-                } else if (personType === "PJ") {
-                    cpfCnpjLabelReference.innerHTML='CNPJ:';
-                    cpfCnpjInputReference.placeholder='12.345.678/0001-00';
-                    cpfCnpjInputReference.maxLength = 18; 
-                }
-            }
-        </script>
-        
     </body>
 </html>
