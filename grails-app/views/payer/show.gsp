@@ -57,6 +57,9 @@
                             <label>Celular:</label>
                             <span>${payer.phoneNumber}</span>
                         </div>
+                        <g:link controller="payer" action="edit" params="${[id: payer.id]}">
+                            <button>Editar pagador</button>
+                        </g:link>
                     </div>
                 </section>
             </div>

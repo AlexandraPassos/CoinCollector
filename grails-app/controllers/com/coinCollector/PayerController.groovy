@@ -17,7 +17,20 @@ class PayerController {
 
     def create() {
         return [:]
-     }
+    }
+
+    def edit() {
+        Long id = params.long("id")
+        Payer payer = Payer.query([id: id]).get()
+        Map params = [id: id, payer: payer]
+        return params
+    }
+
+    def update() {
+        Long id = params.long("id")
+        payerService.update(id, params)
+        redirect (action: 'show', id: id)
+    }
 
     def save() {
         try {
