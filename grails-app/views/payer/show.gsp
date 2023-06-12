@@ -9,9 +9,6 @@
         <div class="container">
             <section class="row">
                 <div id="show-payer" class="col-12 content scaffold-show" role="main">
-                    <g:if test="${flash.message}">
-                    <div class="message" role="status">${flash.message}</div>
-                    </g:if>
                         <div class="data-field">
                             <label>Nome:</label>
                             <span>${payer.name}</span>
