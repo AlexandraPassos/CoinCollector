@@ -13,11 +13,6 @@ class PayerController {
     def show(Long id) {
         return [payer : Payer.query([id: id]).get()]
     }
-  
-     def show(Long id) {
-        def payer = Payer.get(id)
-        [payer: payer]
-    }
 
     def create() {
         return [:]
