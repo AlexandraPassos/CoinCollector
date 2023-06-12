@@ -38,7 +38,7 @@ class PayerService {
     }
 
     public void delete(Map params) {
-        Payer payer = Payer.findById(params.id)
+        Payer payer = Payer.query([id: params.id, payerId: params.payerId]).get()
         payer.deleted = true
         payer.save(failOnError: true)
     }

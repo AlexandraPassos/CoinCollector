@@ -7,13 +7,11 @@ class PayerController {
     def payerService
 
     def index() {
-        def payerList = Payer.list(params).findAll({ !it.deleted })
-        [payerList: payerList]
-    }
+        return [payerList : Payer.query([customerId: 1]).list()]
+    }  
 
     def show(Long id) {
-        def payer = Payer.get(id)
-        [payer: payer]
+        return [payer : Payer.query([id: id]).get()]
     }
 
     def create() {
