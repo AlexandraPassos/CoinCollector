@@ -1,10 +1,8 @@
 package utils.basePerson
 
 import utils.baseEntity.BaseEntity
-
-import utils.personType.PersonType
-
 import grails.gorm.dirty.checking.DirtyCheck
+import utils.personType.PersonType
 
 @DirtyCheck
 abstract class BasePerson extends BaseEntity {
