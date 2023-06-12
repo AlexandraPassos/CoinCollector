@@ -7,7 +7,12 @@ class PayerController {
     def payerService
 
     def index() {
-        return [:]
+        def payerList = Payer.list()
+        [payerList: payerList]
+    }
+     def show(Long id) {
+        def payer = Payer.get(id)
+        [payer: payer]
     }
 
     def create() {

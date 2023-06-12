@@ -6,7 +6,7 @@ import utils.personType.PersonType
 import utils.cpfCnpj.CpfCnpjUtils 
 import utils.phoneNumber.PhoneNumberUtils 
 import utils.name.NameUtils 
-import utils.email.EmailUtils 
+import utils.email.EmailUtils
 
 @Transactional
 class PayerService {
