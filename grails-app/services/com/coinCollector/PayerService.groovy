@@ -35,13 +35,4 @@ class PayerService {
         payer.customer = Customer.findById(1)
         payer.save(failOnError: true)
     }
-
-    def getAllPayers() {
-        Payer.list()
-    }
-
-    def getPayerById(Long id) {
-    def payer = Payer.get(id)
-    return payer
-    }
 }
