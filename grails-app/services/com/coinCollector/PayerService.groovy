@@ -7,7 +7,6 @@ import utils.cpfCnpj.CpfCnpjUtils
 import utils.phoneNumber.PhoneNumberUtils 
 import utils.name.NameUtils 
 import utils.email.EmailUtils
-import grails.validation.ValidationException
 
 @Transactional
 class PayerService {
