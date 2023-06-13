@@ -36,7 +36,7 @@ class PayerService {
 
     public void update(Long id, Map params) {
         Payer payer = Payer.query([id: id]).get()
-        if (payer == null) {
+        if (!payer) {
             throw new Exception("Pagador não encontrado")
         }
         payer.name = params.name

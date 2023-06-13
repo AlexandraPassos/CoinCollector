@@ -22,7 +22,7 @@ class PayerController {
     def edit() {
         Long id = params.long("id")
         Payer payer = Payer.query([id: id]).get()
-        if (payer == null) {
+        if (!payer) {
             flash.message = "Pagador não encontrado com o ID ${id}"
             redirect(action: 'index')
             return
