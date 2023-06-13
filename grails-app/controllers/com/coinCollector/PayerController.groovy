@@ -11,7 +11,21 @@ class PayerController {
     }  
 
     def show(Long id) {
-        return [payer : Payer.query([id: id]).get()]
+        if (!id) {
+            flash.message = "Erro ao buscar pagador. ID inválido ou não informado."
+            redirect(action: "index")
+            return
+        }
+
+        Payer payer = Payer.query([id: id]).get()
+        
+        if (!payer) {
+            flash.message = "Pagador não encontrado com o ID informado."
+            redirect(action: "index")
+            return
+        }
+
+        return [payer: payer]
     }
 
     def create() {
@@ -46,6 +60,17 @@ class PayerController {
     }
 
     def delete() {
-        payerService.delete(params)
+        try {
+            Long id = params.long("id")
+            payerService.delete(id)
+            flash.message = "Pagador deletado com sucesso"
+            redirect(action: 'index')
+        } catch (ValidationException validationException) {
+            flash.message = validationException.message
+            redirect(action: 'index') 
+        } catch (Exception exception) {
+            flash.message = exception.message
+            redirect(action: 'index')
+        }
     }
 }

@@ -1,12 +1,11 @@
 package com.coinCollector
 
 import grails.gorm.transactions.Transactional
-import com.coinCollector.Payer
-import utils.personType.PersonType
-import utils.cpfCnpj.CpfCnpjUtils 
-import utils.phoneNumber.PhoneNumberUtils 
-import utils.name.NameUtils 
+import utils.cpfCnpj.CpfCnpjUtils
 import utils.email.EmailUtils
+import utils.name.NameUtils
+import utils.personType.PersonType
+import utils.phoneNumber.PhoneNumberUtils
 
 @Transactional
 class PayerService {
@@ -19,7 +18,6 @@ class PayerService {
         if(!EmailUtils.emailIsValid(params.email)) return
 
         Payer payer = new Payer()  
-        payer.id = params.id 
         payer.name = params.name
         payer.email = params.email
         payer.personType = params.personType
@@ -53,8 +51,11 @@ class PayerService {
         payer.save(failOnError: true)
     }
   
-    public void delete(Map params) {
-        Payer payer = Payer.query([id: params.id, payerId: params.payerId]).get()
+    public void delete(Long id) {
+        if (!id) throw new Exception("ID do pagador não informado")
+        Payer payer = Payer.query([id: id]).get()
+        if (!payer) throw new Exception("Pagador com o ID ${id} não encontrado.")
         payer.deleted = true
+        payer.save(failOnError: true) 
     }
 }
