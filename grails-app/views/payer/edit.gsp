@@ -6,7 +6,6 @@
         <asset:javascript src="changePersonType.js"/>
     </head>
     <body>
-        <g:if test="${payer}">
         <h1>Atualizar registro de Pagador</h1>
         <form action="${createLink(controller: 'payer', action: 'update', params: params)}" method="post">
             <div>
@@ -73,6 +72,5 @@
 
             <button type="submit" value="update">Salvar</button>
         </form>
-        </g:if>
     </body>
 </html>
