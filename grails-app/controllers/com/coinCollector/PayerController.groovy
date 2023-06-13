@@ -27,7 +27,7 @@ class PayerController {
             redirect(action: 'index')
             return
         }
-        Map params = [id: id, payer: payer]
+        Map params = [payer: payer]
         return params
     }
 
