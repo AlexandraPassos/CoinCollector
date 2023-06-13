@@ -1,12 +1,11 @@
 package com.coinCollector
 
 import grails.gorm.transactions.Transactional
-import com.coinCollector.Payer
-import utils.personType.PersonType
-import utils.cpfCnpj.CpfCnpjUtils 
-import utils.phoneNumber.PhoneNumberUtils 
-import utils.name.NameUtils 
+import utils.cpfCnpj.CpfCnpjUtils
 import utils.email.EmailUtils
+import utils.name.NameUtils
+import utils.personType.PersonType
+import utils.phoneNumber.PhoneNumberUtils
 
 @Transactional
 class PayerService {
@@ -37,6 +36,9 @@ class PayerService {
 
     public void update(Long id, Map params) {
         Payer payer = Payer.query([id: id]).get()
+        if (payer == null) {
+            throw new Exception("Pagador não encontrado")
+        }
         payer.name = params.name
         payer.email = params.email
         payer.personType = params.personType

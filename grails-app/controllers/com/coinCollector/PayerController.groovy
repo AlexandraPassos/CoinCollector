@@ -22,14 +22,25 @@ class PayerController {
     def edit() {
         Long id = params.long("id")
         Payer payer = Payer.query([id: id]).get()
+        if (payer == null) {
+            flash.message = "Pagador não encontrado com o ID ${id}"
+            redirect(action: 'index')
+            return
+        }
         Map params = [id: id, payer: payer]
         return params
     }
 
     def update() {
-        Long id = params.long("id")
-        payerService.update(id, params)
-        redirect (action: 'show', id: id)
+        try {
+            Long id = params.long("id")
+            payerService.update(id, params)
+            flash.message = "Pagador atualizado com sucesso"
+            redirect(action: 'show', id: id)
+        } catch (Exception exception) {
+            flash.message = exception.message
+            redirect(action: 'index')
+        }
     }
 
     def save() {
