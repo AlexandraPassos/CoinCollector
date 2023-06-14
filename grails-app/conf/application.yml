@@ -99,11 +99,11 @@ grails:
 
 ---
 hibernate:
+    hibernateDirtyChecking: true
     cache:
         queries: false
         use_second_level_cache: false
         use_query_cache: false
-    hibernateDirtyChecking: true
 dataSource:
     pooled: true
     jmxExport: true
