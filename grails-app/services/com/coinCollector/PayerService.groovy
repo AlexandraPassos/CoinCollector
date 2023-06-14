@@ -13,11 +13,11 @@ class PayerService {
 
         if(PersonType.convert(params.personType) == PersonType.PF && !CpfCnpjUtils.cpfIsValid(params.cpfCnpj)) return
         if(PersonType.convert(params.personType) == PersonType.PJ && !CpfCnpjUtils.cnpjIsValid(params.cpfCnpj)) return 
-        if (!PhoneNumberUtils.phoneNumberIsValid(params.phoneNumber)) return
-        if (!NameUtils.nameIsValid(params.name)) return
-        if (!EmailUtils.emailIsValid(params.email)) return
+        if(!PhoneNumberUtils.phoneNumberIsValid(params.phoneNumber)) return
+        if(!NameUtils.nameIsValid(params.name)) return
+        if(!EmailUtils.emailIsValid(params.email)) return
 
-        Payer payer = new Payer()   
+        Payer payer = new Payer()  
         payer.name = params.name
         payer.email = params.email
         payer.personType = params.personType
@@ -33,7 +33,7 @@ class PayerService {
         payer.customer = Customer.findById(1)
         payer.save(failOnError: true)
     }
-
+  
     public void update(Long id, Map params) {
         Payer payer = Payer.query([id: id]).get()
         if (!payer) {
@@ -52,5 +52,13 @@ class PayerService {
         payer.complement = params.complement
         payer.phoneNumber = params.phoneNumber
         payer.save(failOnError: true)
+    }
+  
+    public void delete(Long id) {
+        if (!id) throw new Exception("ID do pagador não informado")
+        Payer payer = Payer.query([id: id]).get()
+        if (!payer) throw new Exception("Pagador com o ID ${id} não encontrado.")
+        payer.deleted = true
+        payer.save(failOnError: true) 
     }
 }
