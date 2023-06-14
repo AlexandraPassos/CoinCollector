@@ -1,13 +1,12 @@
 package com.coinCollector
 
 import grails.gorm.transactions.Transactional
-import com.coinCollector.Payer
-import utils.personType.PersonType
-import utils.formattingParameters.FormattingParameters
-import utils.cpfCnpj.CpfCnpjUtils 
-import utils.phoneNumber.PhoneNumberUtils 
-import utils.name.NameUtils 
+import utils.cpfCnpj.CpfCnpjUtils
 import utils.email.EmailUtils
+import utils.formattingParameters.FormattingParameters
+import utils.name.NameUtils
+import utils.personType.PersonType
+import utils.phoneNumber.PhoneNumberUtils
 
 @Transactional
 class PayerService {
@@ -22,7 +21,7 @@ class PayerService {
         Payer payer = new Payer()
         payer.name = params.name
         payer.email = params.email
-        payer.personType = FormattingParameters.removeSpecialCharacters(params.personType)
+        payer.personType = params.personType
         payer.cpfCnpj = FormattingParameters.removeSpecialCharacters(params.cpfCnpj)
         payer.cep = FormattingParameters.removeSpecialCharacters(params.cep)
         payer.state = params.state
