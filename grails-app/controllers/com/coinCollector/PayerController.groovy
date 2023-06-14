@@ -12,7 +12,7 @@ class PayerController {
 
     def show(Long id) {
         if (!id) {
-            flash.message = "Erro ao buscar pagador. ID inválido ou não informado."
+            flash.message = "Erro ao buscar pagador. ID não informado."
             redirect(action: "index")
             return
         }
@@ -65,9 +65,6 @@ class PayerController {
             payerService.delete(id)
             flash.message = "Pagador deletado com sucesso"
             redirect(action: 'index')
-        } catch (ValidationException validationException) {
-            flash.message = validationException.message
-            redirect(action: 'index') 
         } catch (Exception exception) {
             flash.message = exception.message
             redirect(action: 'index')
