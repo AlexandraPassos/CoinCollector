@@ -57,8 +57,9 @@
                             <label>Celular:</label>
                             <span>${payer.phoneNumber}</span>
                         </div>
-                        <a href="${ createLink(controller: "payer", action: "edit", params: [id: payer.id]) }" class="btn btn-default">Editar Pagador</a>
-                        <a href="${ createLink(controller: "payer", action: "delete", params: [id: payer.id]) }" class="btn btn-default">Deletar Pagador</a>
+                        <g:link controller="payer" action="edit" params="${[id: payer.id]}">
+                            <button>Editar pagador</button>
+                        </g:link>
                     </div>
                 </section>
             </div>
