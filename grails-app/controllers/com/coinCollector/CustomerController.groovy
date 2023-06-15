@@ -1,5 +1,7 @@
 package com.coinCollector
 
+import grails.validation.ValidationException
+
 class CustomerController {
 
     def customerService
@@ -13,8 +15,13 @@ class CustomerController {
     }
 
     def save() {
-        customerService.save(params)
-        flash.message = "Cliente registrado com sucesso"
-        redirect(action: 'index')
+        try {
+            Customer customer = customerService.save(params)
+            flash.message = "Cliente registrado com sucesso"
+            redirect(action: 'index')
+        } catch (ValidationException validationException) {
+            flash.message = validationException.errors.allErrors.first().defaultMessage
+            redirect(action: 'create')
+        }
     }
 }
