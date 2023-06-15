@@ -1,36 +1,33 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta name="layout" content="main" />
-        <g:set var="entityName" value="${message(code: 'customer.label', default: 'Customer')}" />
-        <title><g:message code="default.list.label" args="[entityName]" /></title>
+        <meta name="layout" content="main" >
+        <title>Listagem de clientes</title>
     </head>
     <body>
-    <div id="content" role="main">
-        <div class="container">
-            <section class="row">
-                <a href="#list-customer" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-                <div class="nav" role="navigation">
-                    <ul>
-                        <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-                        <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
-                    </ul>
-                </div>
-            </section>
-            <section class="row">
-                <div id="list-customer" class="col-12 content scaffold-list" role="main">
-                    <h1><g:message code="default.list.label" args="[entityName]" /></h1>
-                        <div class="message" role="status">${flash.message}</div>
-                    <f:table collection="${customerList}" />
-
-                    <g:if test="${customerCount > params.int('max')}">
-                    <div class="pagination">
-                        <g:paginate total="${customerCount ?: 0}" />
-                    </div>
-                    </g:if>
-                </div>
-            </section>
-        </div>
-    </div>
+        <g:link action="create">
+            <button>Novo cliente</button>
+        </g:link>
+        <h1>Lista com clientes</h1>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>E-mail</th>
+                    <th>CPF/CNPJ</th>
+                    <th>Celular</th>
+                    <th>Mais informações</th>
+                </tr>
+                <g:each in="${customerList}" var="customer">
+                    <tr>
+                        <td>${customer?.id}</td>
+                        <td>${customer?.name}</td>
+                        <td>${customer?.email}</td>
+                        <td>${customer?.cpfCnpj}</td>
+                        <td>${customer?.phoneNumber}</td>
+                        <td><g:link action="show" id="${customer?.id}">Visualizar mais</g:link></td>
+                    </tr>
+                </g:each>
+            </table>
     </body>
 </html>
