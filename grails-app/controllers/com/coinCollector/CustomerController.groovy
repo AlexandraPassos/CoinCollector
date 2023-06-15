@@ -30,6 +30,30 @@ class CustomerController {
         return [:]
     }
 
+    def edit() {
+        Long id = params.long("id")
+        Customer customer = Customer.query([id: id]).get()
+        if (!customer) {
+            flash.message = "Cliente não encontrado com o ID ${id}"
+            redirect(action: 'index')
+            return
+        }
+        Map params = [customer: customer]
+        return params
+    }
+
+    def update() {
+        try {
+            Long id = params.long("id")
+            customerService.update(id, params)
+            flash.message = "Cliente atualizado com sucesso"
+            redirect(action: 'show', id: id)
+        } catch (Exception exception) {
+            flash.message = exception.message
+            redirect(action: 'index')
+        }
+    }
+
     def save() {
         customerService.save(params)
         flash.message = "Cliente registrado com sucesso"

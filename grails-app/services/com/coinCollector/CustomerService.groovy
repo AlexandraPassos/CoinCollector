@@ -33,4 +33,24 @@ class CustomerService {
         customer.phoneNumber = params.phoneNumber
         customer.save(failOnError: true)
     }
+
+    public void update(Long id, Map params) {
+        Customer customer = Customer.query([id: id]).get()
+        if (!customer) {
+            throw new Exception("Cliente não encontrado")
+        }
+        customer.name = params.name
+        customer.email = params.email
+        customer.personType = params.personType
+        customer.cpfCnpj = params.cpfCnpj
+        customer.cep = params.cep
+        customer.state = params.state
+        customer.city = params.city
+        customer.district = params.district
+        customer.address = params.address
+        customer.addressNumber = params.addressNumber
+        customer.complement = params.complement
+        customer.phoneNumber = params.phoneNumber
+        customer.save(failOnError: true)
+    }
 }
