@@ -35,7 +35,6 @@ abstract class BasePerson extends BaseEntity {
     }
 
     static constraints = {
-        personType maxSize: 2
         cpfCnpj maxSize: 14
         cep maxSize: 8
         state maxSize: 2
