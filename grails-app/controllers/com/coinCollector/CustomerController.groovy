@@ -10,7 +10,7 @@ class CustomerController {
 
     def show(Long id) {
         if (!id) {
-            flash.message = "Erro ao buscar pagador. ID não informado."
+            flash.message = "Erro ao buscar cliente. ID não informado."
             redirect(action: "index")
             return
         }
@@ -18,7 +18,7 @@ class CustomerController {
         Customer customer = Customer.query([id: id]).get()
         
         if (!customer) {
-            flash.message = "Pagador não encontrado com o ID informado."
+            flash.message = "Cliente com o ID ${id} não encontrado."
             redirect(action: "index")
             return
         }
