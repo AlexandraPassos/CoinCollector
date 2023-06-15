@@ -33,4 +33,12 @@ abstract class BasePerson extends BaseEntity {
     static mapping = {
         personType enumType: 'string'
     }
+
+    static constraints = {
+        cpfCnpj maxSize: 14
+        cep maxSize: 8
+        state maxSize: 2
+        complement blank: true, nullable: true
+        phoneNumber maxSize: 11
+    } 
 }

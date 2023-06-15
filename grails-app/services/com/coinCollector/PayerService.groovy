@@ -3,6 +3,7 @@ package com.coinCollector
 import grails.gorm.transactions.Transactional
 import utils.cpfCnpj.CpfCnpjUtils
 import utils.email.EmailUtils
+import utils.formattingParameters.FormattingParameters
 import utils.name.NameUtils
 import utils.personType.PersonType
 import utils.phoneNumber.PhoneNumberUtils
@@ -17,19 +18,19 @@ class PayerService {
         if(!NameUtils.nameIsValid(params.name)) return
         if(!EmailUtils.emailIsValid(params.email)) return
 
-        Payer payer = new Payer()  
+        Payer payer = new Payer()
         payer.name = params.name
         payer.email = params.email
         payer.personType = params.personType
-        payer.cpfCnpj = params.cpfCnpj
-        payer.cep = params.cep
+        payer.cpfCnpj = FormattingParameters.removeSpecialCharacters(params.cpfCnpj)
+        payer.cep = FormattingParameters.removeSpecialCharacters(params.cep)
         payer.state = params.state
         payer.city = params.city
         payer.district = params.district
         payer.address = params.address
-        payer.addressNumber = params.addressNumber
+        payer.addressNumber = FormattingParameters.removeSpecialCharacters(params.addressNumber)
         payer.complement = params.complement
-        payer.phoneNumber = params.phoneNumber
+        payer.phoneNumber = FormattingParameters.removeSpecialCharacters(params.phoneNumber)
         payer.customer = Customer.findById(1)
         payer.save(failOnError: true)
     }
