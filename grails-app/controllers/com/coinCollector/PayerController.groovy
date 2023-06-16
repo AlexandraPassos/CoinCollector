@@ -7,8 +7,10 @@ class PayerController {
     def payerService
 
     def index() {
-        return [payerList : Payer.query([customerId: 1]).list()]
-    }  
+        Boolean mustShowDeletedPayers = params.boolean("mustShowDeletedPayers") ?: false
+        List<Payer> payerList = Payer.query([customerId: 1, deleted: mustShowDeletedPayers]).list()
+        return [payerList: payerList, mustShowDeletedPayers: mustShowDeletedPayers]
+    }
 
     def show(Long id) {
         if (!id) {
@@ -75,6 +77,18 @@ class PayerController {
             Long id = params.long("id")
             payerService.delete(id)
             flash.message = "Pagador deletado com sucesso"
+            redirect(action: 'index')
+        } catch (Exception exception) {
+            flash.message = exception.message
+            redirect(action: 'index')
+        }
+    }
+
+    def restore() {
+        try {
+            Long id = params.long("id")
+            payerService.restore(id)
+            flash.message = "Pagador inativo restaurado com sucesso"
             redirect(action: 'index')
         } catch (Exception exception) {
             flash.message = exception.message

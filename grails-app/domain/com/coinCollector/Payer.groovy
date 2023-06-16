@@ -9,8 +9,8 @@ class Payer extends BasePerson {
         query { Map search ->
             if (search.containsKey("id")) eq("id", Long.valueOf(search.id))
 
-            if (!search.containsKey("includeDeleted")) eq("deleted", false)
-            
+            if (search.containsKey("deleted")) eq("deleted", search.deleted)
+
             if (search.containsKey("customerId")) eq("customer.id", Long.valueOf(search.customerId))
         }
     }
