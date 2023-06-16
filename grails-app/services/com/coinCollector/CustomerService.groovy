@@ -1,29 +1,28 @@
 package com.coinCollector
 
 import grails.gorm.transactions.Transactional
-import grails.validation.ValidationException
 import utils.cpfCnpj.CpfCnpjUtils
 import utils.email.EmailUtils
+import utils.formattingParameters.FormattingParameters
 import utils.name.NameUtils
 import utils.personType.PersonType
 import utils.phoneNumber.PhoneNumberUtils
 
 @Transactional
 class CustomerService {
-
     public Customer save(Map params) {
         Customer validatedCustomer = validateCustomer(params)
 
         if (validatedCustomer.hasErrors()) {
-            throw new ValidationException("Erro ao salvar um cliente", validatedCustomer.errors)
+            return validatedCustomer
         }
 
         Customer customer = new Customer()
         customer.name = params.name
         customer.email = params.email
-        customer.personType = params.personType
+        customer.personType = PersonType.convert(params.personType.toString())
         customer.cpfCnpj = params.cpfCnpj
-        customer.cep = params.cep
+        customer.cep = FormattingParameters.removeSpecialCharacters(params.cep)
         customer.state = params.state
         customer.city = params.city
         customer.district = params.district
@@ -34,7 +33,7 @@ class CustomerService {
         customer.save(failOnError: true)
     }
 
-    private Customer validateCustomer(Map params) {
+    public Customer validateCustomer(Map params) {
         Customer validatedCustomer = new Customer()
 
         if (!params.name) {

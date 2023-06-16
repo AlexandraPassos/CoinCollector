@@ -1,7 +1,5 @@
 package com.coinCollector
 
-import grails.validation.ValidationException
-
 class CustomerController {
 
     def customerService
@@ -15,13 +13,25 @@ class CustomerController {
     }
 
     def save() {
+        Long id = params.long("id")
+
         try {
-            Customer customer = customerService.save(params)
+            Customer validatedCustomer = customerService.save(params)
+
+            if (validatedCustomer.hasErrors()) {
+                List<String> errorMessages = validatedCustomer.errors.allErrors.collect { it.getDefaultMessage() }
+                String errorMessage = errorMessages.join(", ")
+                flash.message = "Erro ao salvar o cliente: " + errorMessage
+                redirect([action: 'create', id: id])
+                return
+            }
+
             flash.message = "Cliente registrado com sucesso"
-            redirect(action: 'index')
-        } catch (ValidationException validationException) {
-            flash.message = validationException.errors.allErrors.first().defaultMessage
-            redirect(action: 'create')
+            redirect([action: 'index', id: id])
+            return
+
+        } catch (Exception exception) {
+            flash.message = "Um erro inesperado ocorreu. Por favor, contate o suporte."
         }
     }
 }

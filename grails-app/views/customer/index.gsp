@@ -18,11 +18,6 @@
                 </div>
             </section>
             <section class="row">
-                <div id="list-customer" class="col-12 content scaffold-list" role="main">
-                    <h1><g:message code="default.list.label" args="[entityName]" /></h1>
-                        <div class="message" role="status">${flash.message}</div>
-                    <f:table collection="${customerList}" />
-
                     <g:if test="${customerCount > params.int('max')}">
                     <div class="pagination">
                         <g:paginate total="${customerCount ?: 0}" />
