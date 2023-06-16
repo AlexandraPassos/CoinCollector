@@ -2,13 +2,13 @@
 <html>
     <head>
         <meta name="layout" content="main" >
-        <title>Listagem de Clientes</title>
+        <title>Listagem de clientes</title>
     </head>
     <body>
         <g:link action="create">
-            <button>Novo Cliente</button>
+            <button>Novo cliente</button>
         </g:link>
-        <h1>Lista com Clientes</h1>
+        <h1>Lista com clientes</h1>
             <table>
                 <tr>
                     <th>ID</th>
