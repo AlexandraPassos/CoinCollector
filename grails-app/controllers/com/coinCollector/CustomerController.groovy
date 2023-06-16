@@ -18,7 +18,7 @@ class CustomerController {
         Customer customer = Customer.query([id: id]).get()
         
         if (!customer) {
-            flash.message = "Cliente não encontrado com o ID informado."
+            flash.message = "Cliente com o ID ${id} não encontrado."
             redirect(action: "index")
             return
         }
