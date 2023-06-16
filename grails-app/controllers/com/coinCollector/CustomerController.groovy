@@ -10,7 +10,7 @@ class CustomerController {
 
     def show(Long id) {
         if (!id) {
-            flash.message = "Erro ao editar cliente. ID não informado."
+            flash.message = "Erro ao buscar cliente. ID não informado."
             redirect(action: "index")
             return
         }
