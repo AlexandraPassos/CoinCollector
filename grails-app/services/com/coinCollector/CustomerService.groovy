@@ -1,6 +1,7 @@
 package com.coinCollector
 
 import grails.gorm.transactions.Transactional
+import utils.formattingParameters.FormattingParameters
 import utils.cpfCnpj.CpfCnpjUtils
 import utils.email.EmailUtils
 import utils.name.NameUtils
@@ -39,18 +40,25 @@ class CustomerService {
         if (!customer) {
             throw new Exception("Cliente não encontrado")
         }
+
+        if(PersonType.convert(params.personType) == PersonType.PF && !CpfCnpjUtils.cpfIsValid(params.cpfCnpj)) return
+        if(PersonType.convert(params.personType) == PersonType.PJ && !CpfCnpjUtils.cnpjIsValid(params.cpfCnpj)) return
+        if(!PhoneNumberUtils.phoneNumberIsValid(params.phoneNumber)) return
+        if(!NameUtils.nameIsValid(params.name)) return
+        if(!EmailUtils.emailIsValid(params.email)) return
+
         customer.name = params.name
         customer.email = params.email
         customer.personType = params.personType
-        customer.cpfCnpj = params.cpfCnpj
-        customer.cep = params.cep
+        customer.cpfCnpj = FormattingParameters.removeSpecialCharacters(params.cpfCnpj)
+        customer.cep = FormattingParameters.removeSpecialCharacters(params.cep)
         customer.state = params.state
         customer.city = params.city
         customer.district = params.district
         customer.address = params.address
-        customer.addressNumber = params.addressNumber
+        customer.addressNumber = FormattingParameters.removeSpecialCharacters(params.addressNumber)
         customer.complement = params.complement
-        customer.phoneNumber = params.phoneNumber
+        customer.phoneNumber = FormattingParameters.removeSpecialCharacters(params.phoneNumber)
         customer.save(failOnError: true)
     }
 }
