@@ -1,5 +1,6 @@
 package com.coinCollector
 
+import com.coinCollector.payer.Payer
 import grails.gorm.transactions.Transactional
 import utils.cpfCnpj.CpfCnpjUtils
 import utils.email.EmailUtils

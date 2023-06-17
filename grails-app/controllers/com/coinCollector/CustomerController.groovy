@@ -1,5 +1,7 @@
 package com.coinCollector
 
+import com.coinCollector.customer.Customer
+
 class CustomerController {
 
     def customerService

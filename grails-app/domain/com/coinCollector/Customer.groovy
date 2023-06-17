@@ -1,4 +1,4 @@
-package com.coinCollector
+package com.coinCollector.customer
 
 import utils.basePerson.BasePerson
 

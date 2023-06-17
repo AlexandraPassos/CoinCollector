@@ -1,5 +1,6 @@
-package com.coinCollector
+package com.coinCollector.payer
 
+import com.coinCollector.customer.Customer
 import utils.basePerson.BasePerson
 
 class Payer extends BasePerson {
