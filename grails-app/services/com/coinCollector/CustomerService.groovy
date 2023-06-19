@@ -85,10 +85,6 @@ class CustomerService {
             validatedCustomer.errors.reject("", null, "O campo número do endereço é obrigatório")
         }
 
-        if (!params.complement) {
-            validatedCustomer.errors.reject("", null, "O campo complemento é obrigatório")
-        }
-
         if (!params.phoneNumber) {
             validatedCustomer.errors.reject("", null, "O campo celular é obrigatório")
         } else if(!PhoneNumberUtils.phoneNumberIsValid(params.phoneNumber)) {
