@@ -10,6 +10,7 @@ import utils.phoneNumber.PhoneNumberUtils
 
 @Transactional
 class CustomerService {
+
     public Customer save(Map params) {
         Customer validatedCustomer = validateCustomer(params)
 
@@ -21,15 +22,15 @@ class CustomerService {
         customer.name = params.name
         customer.email = params.email
         customer.personType = PersonType.convert(params.personType.toString())
-        customer.cpfCnpj = params.cpfCnpj
+        customer.cpfCnpj = FormattingParameters.removeSpecialCharacters(params.cpfCnpj)
         customer.cep = FormattingParameters.removeSpecialCharacters(params.cep)
         customer.state = params.state
         customer.city = params.city
         customer.district = params.district
         customer.address = params.address
-        customer.addressNumber = params.addressNumber
+        customer.addressNumber = FormattingParameters.removeSpecialCharacters(params.addressNumber)
         customer.complement = params.complement
-        customer.phoneNumber = params.phoneNumber
+        customer.phoneNumber = FormattingParameters.removeSpecialCharacters(params.phoneNumber)
         customer.save(failOnError: true)
     }
 
