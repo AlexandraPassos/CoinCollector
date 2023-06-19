@@ -48,15 +48,19 @@ class CustomerController {
     }
 
     def update() {
-        try {
-            Long id = params.long("id")
-            customerService.update(id, params)
-            flash.message = "Cliente atualizado com sucesso"
-            redirect(action: 'show', id: id)
-        } catch (Exception exception) {
-            flash.message = exception.message
-            redirect(action: 'index')
+        Long id = params.long("id")
+        Customer validatedCustomer = customerService.update(id, params)
+
+        if (validatedCustomer.hasErrors()) {
+            List<String> errorMessages = validatedCustomer.errors.allErrors.collect { it.getDefaultMessage() }
+            String errorMessage = errorMessages.join(", ")
+            flash.message = "Erro ao atualizar o cliente: " + errorMessage
+            redirect(action: 'edit', id: id)
+            return
         }
+        flash.message = "Cliente atualizado com sucesso"
+        redirect(action: 'show', id: id)
+        return
     }
 
     def save() {
