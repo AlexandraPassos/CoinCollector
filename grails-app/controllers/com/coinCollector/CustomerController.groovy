@@ -1,5 +1,8 @@
 package com.coinCollector
 
+import grails.validation.ValidationException
+import utils.message.MessageType
+
 class CustomerController {
 
     def customerService
@@ -50,20 +53,21 @@ class CustomerController {
         return params
     }
 
-    def update() {
-        Long id = params.long("id")
-        Customer validatedCustomer = customerService.update(id, params)
-
-        if (validatedCustomer.hasErrors()) {
-            List<String> errorMessages = validatedCustomer.errors.allErrors.collect { it.getDefaultMessage() }
-            String errorMessage = errorMessages.join(", ")
-            flash.message = "Erro ao atualizar o cliente: " + errorMessage
+    def update(Long id) {
+        try {
+            customerService.update(id, params)
+            flash.message = "Cliente atualizado com sucesso"
+            redirect(action: 'show', id: id)
+        } catch (ValidationException validationException) {
+            flash.message = message(error: validationException.errors.allErrors[0])
+            flash.type = MessageType.ERROR
             redirect(action: 'edit', id: id)
-            return
+        } catch (Exception exception) {
+            log.error("CustomerController.update >> Erro ao atualizar conta.", exception)
+            flash.message = "Erro ao atualizar conta"
+            flash.type = MessageType.ERROR
+            redirect(action: 'edit', id: id)
         }
-        flash.message = "Cliente atualizado com sucesso"
-        redirect(action: 'show', id: id)
-        return
     }
 
     def save() {
