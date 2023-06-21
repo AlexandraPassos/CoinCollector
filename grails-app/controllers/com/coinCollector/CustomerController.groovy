@@ -37,12 +37,15 @@ class CustomerController {
             redirect(action: 'index')
             return
         }
+
         Customer customer = Customer.query([id: id]).get()
+
         if (!customer) {
             flash.message = "Cliente não encontrado com o ID ${id}"
             redirect(action: 'index')
             return
         }
+
         Map params = [customer: customer]
         return params
     }
