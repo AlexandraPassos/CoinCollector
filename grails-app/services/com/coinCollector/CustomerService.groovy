@@ -1,9 +1,10 @@
 package com.coinCollector
 
 import grails.gorm.transactions.Transactional
-import utils.formattingParameters.FormattingParameters
+import grails.validation.ValidationException
 import utils.cpfCnpj.CpfCnpjUtils
 import utils.email.EmailUtils
+import utils.formattingParameters.FormattingParameters
 import utils.name.NameUtils
 import utils.personType.PersonType
 import utils.phoneNumber.PhoneNumberUtils
@@ -35,85 +36,107 @@ class CustomerService {
         customer.save(failOnError: true)
     }
 
-    public Customer update(Long id, Map params) {
-        Customer existingCustomer = Customer.query([id: id]).get()
-        Customer validatedCustomer = validateCustomer(params, existingCustomer)
+    public Map parsedParams(Map params) {
+        Map parsedParams = [:]
+        parsedParams.name = params.name
+        parsedParams.email = params.email
+        parsedParams.personType = PersonType.convert(params.personType)
+        parsedParams.cpfCnpj = FormattingParameters.removeSpecialCharacters(params.cpfCnpj)
+        parsedParams.cep = FormattingParameters.removeSpecialCharacters(params.cep)
+        parsedParams.state = params.state
+        parsedParams.city = params.city
+        parsedParams.district = params.district
+        parsedParams.address = params.address
+        parsedParams.addressNumber = FormattingParameters.removeSpecialCharacters(params.addressNumber)
+        parsedParams.complement = params.complement
+        parsedParams.phoneNumber = FormattingParameters.removeSpecialCharacters(params.phoneNumber)
 
-        if (validatedCustomer.hasErrors()) {
-            return validatedCustomer
-        }
-
-        existingCustomer.name = params.name
-        existingCustomer.email = params.email
-        existingCustomer.personType = params.personType
-        existingCustomer.cpfCnpj = FormattingParameters.removeSpecialCharacters(params.cpfCnpj)
-        existingCustomer.cep = FormattingParameters.removeSpecialCharacters(params.cep)
-        existingCustomer.state = params.state
-        existingCustomer.city = params.city
-        existingCustomer.district = params.district
-        existingCustomer.address = params.address
-        existingCustomer.addressNumber = FormattingParameters.removeSpecialCharacters(params.addressNumber)
-        existingCustomer.complement = params.complement
-        existingCustomer.phoneNumber = FormattingParameters.removeSpecialCharacters(params.phoneNumber)
-        existingCustomer.save(failOnError: true)
+        return parsedParams
     }
 
-    private Customer validateCustomer(Map params, Customer existingCustomer) {
+    public Customer update(Long id, Map params) {
+        Map parsedParams = parsedParams(params)
+        Customer validatedCustomer = validateCustomer(parsedParams)
+
+        if (validatedCustomer.hasErrors()) throw new ValidationException(null, validatedCustomer.errors)
+
+        Customer customer = Customer.get(id)
+
+        customer.name = parsedParams.name
+        customer.email = parsedParams.email
+        customer.personType = parsedParams.personType
+        customer.cpfCnpj = parsedParams.cpfCnpj
+        customer.cep = parsedParams.cep
+        customer.state = parsedParams.state
+        customer.city = parsedParams.city
+        customer.district = parsedParams.district
+        customer.address = parsedParams.address
+        customer.addressNumber = parsedParams.addressNumber
+        customer.complement = parsedParams.complement
+        customer.phoneNumber = parsedParams.phoneNumber
+
+        customer.save(failOnError: true)
+    }
+
+    private Customer validateCustomer(Map parsedParams) {
         Customer validatedCustomer = new Customer()
 
-        if (!params.name) {
+        if (!parsedParams.name) {
             validatedCustomer.errors.reject("", null, "O campo nome é obrigatório")
-        } else if(!NameUtils.nameIsValid(params.name)) {
+        } else if (!NameUtils.nameIsValid(parsedParams.name)) {
             validatedCustomer.errors.reject("", null, "Nome inválido")
         }
 
-        if (!params.email) {
+        if (!parsedParams.email) {
             validatedCustomer.errors.reject("", null, "O campo e-mail é obrigatório")
-        } else if(!EmailUtils.emailIsValid(params.email)) {
+        } else if (!EmailUtils.emailIsValid(parsedParams.email)) {
             validatedCustomer.errors.reject("", null, "Formato de e-mail inválido")
         }
 
-        if (!params.personType) {
+        if (!parsedParams.personType) {
             validatedCustomer.errors.reject("", null, "O campo tipo de pessoa é obrigatório")
+        } else if (!parsedParams.personType) {
+            validatedCustomer.errors.reject("", null, "Tipo de pessoa inválido")
         }
 
-        if (!params.cpfCnpj) {
+        if (!parsedParams.cpfCnpj) {
             validatedCustomer.errors.reject("", null, "O campo CPF/CNPJ é obrigatório")
-        } else if(PersonType.convert(params.personType) == PersonType.PF && !CpfCnpjUtils.cpfIsValid(params.cpfCnpj)) {
+        } else if (parsedParams.personType == PersonType.PF && !CpfCnpjUtils.cpfIsValid(parsedParams.cpfCnpj)) {
             validatedCustomer.errors.reject("", null, "CPF inválido")
-        } else if(PersonType.convert(params.personType) == PersonType.PJ && !CpfCnpjUtils.cnpjIsValid(params.cpfCnpj)) {
+        } else if (parsedParams.personType == PersonType.PJ && !CpfCnpjUtils.cnpjIsValid(parsedParams.cpfCnpj)) {
             validatedCustomer.errors.reject("", null, "CNPJ inválido")
         }
 
-        if (!params.cep) {
+        if (!parsedParams.cep) {
             validatedCustomer.errors.reject("", null, "O campo CEP é obrigatório")
         }
 
-        if (!params.state) {
+        if (!parsedParams.state) {
             validatedCustomer.errors.reject("", null, "O campo estado é obrigatório")
         }
 
-        if (!params.city) {
+        if (!parsedParams.city) {
             validatedCustomer.errors.reject("", null, "O campo cidade é obrigatório")
         }
 
-        if (!params.district) {
+        if (!parsedParams.district) {
             validatedCustomer.errors.reject("", null, "O campo bairro é obrigatório")
         }
 
-        if (!params.address) {
+        if (!parsedParams.addressNumber) {
             validatedCustomer.errors.reject("", null, "O campo endereço é obrigatório")
         }
 
-        if (!params.addressNumber) {
+        if (!parsedParams.phoneNumber) {
             validatedCustomer.errors.reject("", null, "O campo número do endereço é obrigatório")
         }
 
-        if (!params.phoneNumber) {
+        if (!parsedParams.phoneNumber) {
             validatedCustomer.errors.reject("", null, "O campo celular é obrigatório")
-        } else if(!PhoneNumberUtils.phoneNumberIsValid(params.phoneNumber)) {
+        } else if (!PhoneNumberUtils.phoneNumberIsValid(parsedParams.phoneNumber)) {
             validatedCustomer.errors.reject("", null, "Número de celular inválido")
         }
+
         return validatedCustomer
     }
 }
