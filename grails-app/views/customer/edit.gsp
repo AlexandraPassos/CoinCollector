@@ -2,11 +2,11 @@
 <html>
     <head>
         <meta name="layout" content="main" >
-        <title>Editar Cliente</title>
+        <title>Alterar Conta</title>
         <asset:javascript src="changePersonType.js"/>
     </head>
     <body>
-        <h1>Atualizar registro de Cliente</h1>
+        <h1>Alterar Conta</h1>
         <form action="${createLink(controller: 'customer', action: 'update', params: params)}" method="post">
             <div>
                 <label for="name">Nome:</label>
@@ -23,7 +23,7 @@
                 <input type="radio" name="personType" id="pfRadio" value="PF" onchange="changePersonType()" checked> <label for="pfRadio">Pessoa Física</label>
                 <input type="radio" name="personType" id="pjRadio" value="PJ" onchange="changePersonType()"> <label for="pjRadio">Pessoa Jurídica</label>
 
-                <div id="cpfCnpj-container">
+                <div id="cpf-cnpj-container">
                     <label for="cpfCnpj" id="cpfCnpj-label">CPF:</label>
                     <input type="text" name="cpfCnpj" value="${customer.cpfCnpj}" placeholder="123.456.789-12" maxLength=14 id="cpfCnpj">
                 </div>
