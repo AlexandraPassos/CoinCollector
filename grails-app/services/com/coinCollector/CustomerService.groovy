@@ -11,7 +11,6 @@ import utils.phoneNumber.PhoneNumberUtils
 
 @Transactional
 class CustomerService {
-
     public Customer save(Map params) {
 
         Customer validatedCustomer = validateCustomer(params)
