@@ -1,6 +1,7 @@
 package com.coinCollector
 
 import grails.gorm.transactions.Transactional
+import grails.validation.ValidationException
 import utils.cpfCnpj.CpfCnpjUtils
 import utils.email.EmailUtils
 import utils.formattingParameters.FormattingParameters
@@ -12,11 +13,10 @@ import utils.phoneNumber.PhoneNumberUtils
 class CustomerService {
 
     public Customer save(Map params) {
+
         Customer validatedCustomer = validateCustomer(params)
 
-        if (validatedCustomer.hasErrors()) {
-            return validatedCustomer
-        }
+        if (validatedCustomer.hasErrors()) throw new ValidationException(null, validatedCustomer.errors)
 
         Customer customer = new Customer()
         customer.name = params.name
@@ -39,25 +39,27 @@ class CustomerService {
 
         if (!params.name) {
             validatedCustomer.errors.reject("", null, "O campo nome é obrigatório")
-        } else if(!NameUtils.nameIsValid(params.name)) {
+        } else if (!NameUtils.nameIsValid(params.name)) {
             validatedCustomer.errors.reject("", null, "Nome inválido")
         }
 
         if (!params.email) {
             validatedCustomer.errors.reject("", null, "O campo e-mail é obrigatório")
-        } else if(!EmailUtils.emailIsValid(params.email)) {
+        } else if (!EmailUtils.emailIsValid(params.email)) {
             validatedCustomer.errors.reject("", null, "Formato de e-mail inválido")
         }
 
         if (!params.personType) {
             validatedCustomer.errors.reject("", null, "O campo tipo de pessoa é obrigatório")
+        } else if (!PersonType.convert(params.personType)) {
+            validatedCustomer.errors.reject("", null, "Tipo de pessoa inválido")
         }
 
         if (!params.cpfCnpj) {
             validatedCustomer.errors.reject("", null, "O campo CPF/CNPJ é obrigatório")
-        } else if(PersonType.convert(params.personType) == PersonType.PF && !CpfCnpjUtils.cpfIsValid(params.cpfCnpj)) {
+        } else if (PersonType.convert(params.personType) == PersonType.PF && !CpfCnpjUtils.cpfIsValid(params.cpfCnpj)) {
             validatedCustomer.errors.reject("", null, "CPF inválido")
-        } else if(PersonType.convert(params.personType) == PersonType.PJ && !CpfCnpjUtils.cnpjIsValid(params.cpfCnpj)) {
+        } else if (PersonType.convert(params.personType) == PersonType.PJ && !CpfCnpjUtils.cnpjIsValid(params.cpfCnpj)) {
             validatedCustomer.errors.reject("", null, "CNPJ inválido")
         }
 
@@ -87,7 +89,7 @@ class CustomerService {
 
         if (!params.phoneNumber) {
             validatedCustomer.errors.reject("", null, "O campo celular é obrigatório")
-        } else if(!PhoneNumberUtils.phoneNumberIsValid(params.phoneNumber)) {
+        } else if (!PhoneNumberUtils.phoneNumberIsValid(params.phoneNumber)) {
             validatedCustomer.errors.reject("", null, "Número de celular inválido")
         }
 
