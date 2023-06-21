@@ -9,7 +9,12 @@ enum PersonType {
     PF('Pessoa Física'),
 
     public static PersonType convert(String personType) {
-        return personType as PersonType
+        try {
+            if (personType instanceof String) personType = personType.toUpperCase()
+            return personType as PersonType
+        } catch (Exception exception) {
+            return null
+        }
     }
 
     final String id
