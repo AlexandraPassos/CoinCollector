@@ -1,11 +1,11 @@
 <html>
     <head>
         <meta name="layout" content="main" >
-        <title>Registrar Novo Cliente</title>
+        <title>Criação de conta</title>
         <asset:javascript src="changePersonType.js"/>
     </head>
     <body>
-        <h1>Registro de Novo Cliente</h1>
+        <h1>Criação de conta</h1>
         <form action="${createLink(controller: 'customer', action: 'save')}" method="post">
             <div>
                 <label for="name">Nome:</label>
