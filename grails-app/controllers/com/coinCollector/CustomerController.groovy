@@ -57,6 +57,7 @@ class CustomerController {
         try {
             customerService.update(id, params)
             flash.message = "Cliente atualizado com sucesso"
+            flash.type = MessageType.SUCCESS
             redirect(action: 'show', id: id)
         } catch (ValidationException validationException) {
             flash.message = message(error: validationException.errors.allErrors[0])
