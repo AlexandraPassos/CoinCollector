@@ -56,19 +56,8 @@ class CustomerService {
 
         Customer customer = Customer.get(id)
 
-        customer.name = parsedParams.name
-        customer.email = parsedParams.email
-        customer.personType = parsedParams.personType
-        customer.cpfCnpj = parsedParams.cpfCnpj
-        customer.cep = parsedParams.cep
-        customer.state = parsedParams.state
-        customer.city = parsedParams.city
-        customer.district = parsedParams.district
-        customer.address = parsedParams.address
-        customer.addressNumber = parsedParams.addressNumber
-        customer.complement = parsedParams.complement
-        customer.phoneNumber = parsedParams.phoneNumber
-
+        List<String> updatableParams = ["name", "email", "personType", "cpfCnpj", "cep", "state", "city", "district", "address", "address", "addressNumber", "complement", "phoneNumber"]
+        customer.properties[updatableParams] = parsedParams
         customer.save(failOnError: true)
     }
 
