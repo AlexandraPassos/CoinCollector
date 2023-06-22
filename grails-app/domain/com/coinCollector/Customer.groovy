@@ -6,7 +6,9 @@ class Customer extends BasePerson {
 
     static namedQueries = {
         query { Map search ->
-            if (search.containsKey("id")) eq("id", Long.valueOf(search.id))
+            if (search.containsKey("id")) {
+                eq("id", Long.valueOf(search.id))
+            }
         }
     }
 }

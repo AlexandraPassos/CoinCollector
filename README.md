@@ -26,3 +26,4 @@
 ## Autores
 
  - [Alexandra Passos](https://github.com/AlexandraPassos)
+ - [Eric Garcia](https://github.com/EricGarcia-Asaas)
