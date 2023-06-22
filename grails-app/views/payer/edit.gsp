@@ -4,6 +4,7 @@
         <meta name="layout" content="main" >
         <title>Editar Pagador</title>
         <asset:javascript src="changePersonType.js"/>
+        <asset:javascript src="viaCep.js"/>
     </head>
     <body>
         <h1>Atualizar registro de Pagador</h1>
@@ -32,7 +33,7 @@
 
             <div>
                 <label for="cep">CEP:</label>
-                <input type="text" name="cep" value="${payer.cep}" placeholder="12345-678" maxLength=9 id="cep"/>
+                <input type="text" name="cep" value="${payer.cep}" placeholder="12345-678" maxLength=9 id="cep" onblur="cepSearch(this.value)"/>
             </div>
 
             <div>

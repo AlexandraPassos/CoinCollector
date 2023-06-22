@@ -3,6 +3,7 @@
         <meta name="layout" content="main" >
         <title>Registrar Novo Pagador</title>
         <asset:javascript src="changePersonType.js"/>
+        <asset:javascript src="viaCep.js"/>
     </head>
     <body>
         <h1>Registro de Novo Pagador</h1>
@@ -31,7 +32,7 @@
 
             <div>
                 <label for="cep">CEP:</label>
-                <input type="text" name="cep" placeholder="12345-678" maxLength=9 id="cep"/>
+                <input type="text" name="cep" placeholder="12345-678" maxLength=9 id="cep" onblur="cepSearch(this.value)"/>
             </div>
 
             <div>
