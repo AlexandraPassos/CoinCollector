@@ -94,8 +94,6 @@ class CustomerService {
         }
 
         if (!parsedParams.personType) {
-            validatedCustomer.errors.reject("", null, "O campo tipo de pessoa é obrigatório")
-        } else if (!parsedParams.personType) {
             validatedCustomer.errors.reject("", null, "Tipo de pessoa inválido")
         }
 
@@ -123,11 +121,11 @@ class CustomerService {
             validatedCustomer.errors.reject("", null, "O campo bairro é obrigatório")
         }
 
-        if (!parsedParams.addressNumber) {
+        if (!parsedParams.address) {
             validatedCustomer.errors.reject("", null, "O campo endereço é obrigatório")
         }
 
-        if (!parsedParams.phoneNumber) {
+        if (!parsedParams.addressNumber) {
             validatedCustomer.errors.reject("", null, "O campo número do endereço é obrigatório")
         }
 
