@@ -12,7 +12,6 @@ import utils.phoneNumber.PhoneNumberUtils
 @Transactional
 class CustomerService {
     public Map parsedParams(Map params) {
-
         Map parsedParams = [:]
         parsedParams.name = params.name
         parsedParams.email = params.email
@@ -26,14 +25,12 @@ class CustomerService {
         parsedParams.addressNumber = FormattingParameters.removeSpecialCharacters(params.addressNumber)
         parsedParams.complement = params.complement
         parsedParams.phoneNumber = FormattingParameters.removeSpecialCharacters(params.phoneNumber)
-        return parsedParams
 
+        return parsedParams
     }
 
     public Customer save(Map params) {
-
         Map parsedParams = parsedParams(params)
-
         Customer validatedCustomer = validateCustomer(parsedParams)
 
         if (validatedCustomer.hasErrors()) throw new ValidationException(null, validatedCustomer.errors)
