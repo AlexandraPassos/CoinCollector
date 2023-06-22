@@ -37,18 +37,12 @@ class CustomerService {
     }
 
     public Map parsedParams(Map params) {
-        Map parsedParams = [:]
-        parsedParams.name = params.name
-        parsedParams.email = params.email
+        Map parsedParams = params
+
         parsedParams.personType = PersonType.convert(params.personType)
         parsedParams.cpfCnpj = FormattingParameters.removeSpecialCharacters(params.cpfCnpj)
         parsedParams.cep = FormattingParameters.removeSpecialCharacters(params.cep)
-        parsedParams.state = params.state
-        parsedParams.city = params.city
-        parsedParams.district = params.district
-        parsedParams.address = params.address
         parsedParams.addressNumber = FormattingParameters.removeSpecialCharacters(params.addressNumber)
-        parsedParams.complement = params.complement
         parsedParams.phoneNumber = FormattingParameters.removeSpecialCharacters(params.phoneNumber)
 
         return parsedParams
