@@ -11,23 +11,6 @@ import utils.phoneNumber.PhoneNumberUtils
 
 @Transactional
 class CustomerService {
-    public Map parsedParams(Map params) {
-        Map parsedParams = [:]
-        parsedParams.name = params.name
-        parsedParams.email = params.email
-        parsedParams.personType = PersonType.convert(params.personType)
-        parsedParams.cpfCnpj = FormattingParameters.removeSpecialCharacters(params.cpfCnpj)
-        parsedParams.cep = FormattingParameters.removeSpecialCharacters(params.cep)
-        parsedParams.state = params.state
-        parsedParams.city = params.city
-        parsedParams.district = params.district
-        parsedParams.address = params.address
-        parsedParams.addressNumber = FormattingParameters.removeSpecialCharacters(params.addressNumber)
-        parsedParams.complement = params.complement
-        parsedParams.phoneNumber = FormattingParameters.removeSpecialCharacters(params.phoneNumber)
-
-        return parsedParams
-    }
 
     public Customer save(Map params) {
         Map parsedParams = parsedParams(params)
@@ -36,18 +19,34 @@ class CustomerService {
         if (validatedCustomer.hasErrors()) throw new ValidationException(null, validatedCustomer.errors)
 
         Customer customer = new Customer()
-        customer.name = parsedParams.name
-        customer.email = parsedParams.email
-        customer.personType = parsedParams.personType
-        customer.cpfCnpj = parsedParams.cpfCnpj
-        customer.cep = parsedParams.cep
-        customer.state = parsedParams.state
-        customer.city = parsedParams.city
-        customer.district = parsedParams.district
-        customer.address = parsedParams.address
-        customer.addressNumber = parsedParams.addressNumber
-        customer.complement = parsedParams.complement
-        customer.phoneNumber = parsedParams.phoneNumber
+
+        List<String> savableParams = ["name", "email", "personType", "cpfCnpj", "cep", "state", "city", "district", "address", "address", "addressNumber", "complement", "phoneNumber"]
+        customer.properties[savableParams] = parsedParams
+        customer.save(failOnError: true)
+    }
+
+    public Map parsedParams(Map params) {
+        Map parsedParams = params
+
+        parsedParams.personType = PersonType.convert(params.personType)
+        parsedParams.cpfCnpj = FormattingParameters.removeSpecialCharacters(params.cpfCnpj)
+        parsedParams.cep = FormattingParameters.removeSpecialCharacters(params.cep)
+        parsedParams.addressNumber = FormattingParameters.removeSpecialCharacters(params.addressNumber)
+        parsedParams.phoneNumber = FormattingParameters.removeSpecialCharacters(params.phoneNumber)
+
+        return parsedParams
+    }
+
+    public Customer update(Long id, Map params) {
+        Map parsedParams = parsedParams(params)
+        Customer validatedCustomer = validateCustomer(parsedParams)
+
+        if (validatedCustomer.hasErrors()) throw new ValidationException(null, validatedCustomer.errors)
+
+        Customer customer = Customer.get(id)
+
+        List<String> updatableParams = ["name", "email", "personType", "cpfCnpj", "cep", "state", "city", "district", "address", "address", "addressNumber", "complement", "phoneNumber"]
+        customer.properties[updatableParams] = parsedParams
         customer.save(failOnError: true)
     }
 
@@ -67,8 +66,6 @@ class CustomerService {
         }
 
         if (!parsedParams.personType) {
-            validatedCustomer.errors.reject("", null, "O campo tipo de pessoa é obrigatório")
-        } else if (!parsedParams.personType) {
             validatedCustomer.errors.reject("", null, "Tipo de pessoa inválido")
         }
 
@@ -96,11 +93,11 @@ class CustomerService {
             validatedCustomer.errors.reject("", null, "O campo bairro é obrigatório")
         }
 
-        if (!parsedParams.addressNumber) {
+        if (!parsedParams.address) {
             validatedCustomer.errors.reject("", null, "O campo endereço é obrigatório")
         }
 
-        if (!parsedParams.phoneNumber) {
+        if (!parsedParams.addressNumber) {
             validatedCustomer.errors.reject("", null, "O campo número do endereço é obrigatório")
         }
 

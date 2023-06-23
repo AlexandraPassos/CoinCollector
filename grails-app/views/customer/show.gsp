@@ -2,14 +2,14 @@
 <html>
     <head>
         <meta name="layout" content="main" />
-        <title>Registro de cliente</title>
+        <title>Minha Conta</title>
     </head>
     <body>
         <div id="content" role="main">
             <div class="container">
                 <section class="row">
                     <div id="show-customer" class="col-12 content scaffold-show" role="main">
-                        <h1>Registro de cliente</h1>
+                        <h1>Minha Conta</h1>
                         <div class="data-field">
                             <label>Nome:</label>
                             <span>${customer.name}</span>
@@ -19,7 +19,7 @@
                             <span>${customer.email}</span>
                         </div>
                         <div class="data-field">
-                            <label>Tipo de cliente:</label>
+                            <label>Tipo de Cliente:</label>
                             <span>${customer.personType}</span>
                         </div>
                         <div class="data-field">
@@ -58,6 +58,7 @@
                             <label>Celular:</label>
                             <span>${customer.phoneNumber}</span>
                         </div>
+                        <a href="${ createLink(controller: "customer", action: "edit", params: [id: customer.id]) }" class="btn btn-default">Alterar Conta</a>
                     </div>
                 </section>
             </div>

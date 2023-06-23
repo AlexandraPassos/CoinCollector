@@ -40,5 +40,5 @@ abstract class BasePerson extends BaseEntity {
         state maxSize: 2
         complement blank: true, nullable: true
         phoneNumber maxSize: 11
-    } 
+    }
 }
