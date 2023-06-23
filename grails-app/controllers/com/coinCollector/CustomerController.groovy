@@ -8,7 +8,7 @@ class CustomerController {
     def customerService
 
     def index() {
-        return [customerList : Customer.list()]
+        return [:]
     }
 
     def show(Long id) {
