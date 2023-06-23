@@ -11,6 +11,24 @@ class CustomerController {
         return [:]
     }
 
+    def show(Long id) {
+        if (!id) {
+            flash.message = "Erro ao buscar cliente. ID não informado."
+            redirect(action: "index")
+            return
+        }
+
+        Customer customer = Customer.query([id: id]).get()
+        
+        if (!customer) {
+            flash.message = "Cliente com o ID ${id} não encontrado."
+            redirect(action: "index")
+            return
+        }
+
+        return [customer: customer]
+    }
+
     def create() {
         return [:]
     }
