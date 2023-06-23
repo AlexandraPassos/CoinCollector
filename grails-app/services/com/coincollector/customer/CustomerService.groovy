@@ -1,5 +1,6 @@
-package com.coinCollector
+package com.coincollector.customer
 
+import com.coincollector.customer.Customer
 import grails.gorm.transactions.Transactional
 import grails.validation.ValidationException
 import utils.cpfCnpj.CpfCnpjUtils

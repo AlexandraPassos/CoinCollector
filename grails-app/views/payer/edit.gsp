@@ -3,8 +3,8 @@
     <head>
         <meta name="layout" content="main" >
         <title>Editar Pagador</title>
-        <asset:javascript src="changePersonType.js"/>
-        <asset:javascript src="viaCep.js"/>
+        <asset:javascript src="changepersontype/changePersonType.js"/>
+        <asset:javascript src="viacep/viaCep.js"/>
     </head>
     <body>
         <h1>Atualizar registro de Pagador</h1>

@@ -1,4 +1,5 @@
-package com.coinCollector
+package com.coincollector.customer
+
 
 import grails.validation.ValidationException
 import utils.message.MessageType

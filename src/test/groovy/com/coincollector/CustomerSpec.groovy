@@ -1,9 +1,10 @@
-package com.coinCollector
+package com.coincollector
 
+import com.coincollector.customer.Customer
 import grails.testing.gorm.DomainUnitTest
 import spock.lang.Specification
 
-class PayerSpec extends Specification implements DomainUnitTest<Payer> {
+class CustomerSpec extends Specification implements DomainUnitTest<Customer> {
 
     def setup() {
     }

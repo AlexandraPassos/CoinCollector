@@ -3,7 +3,7 @@
     <head>
         <meta name="layout" content="main" >
         <title>Alterar Conta</title>
-        <asset:javascript src="changePersonType.js"/>
+        <asset:javascript src="changepersontype/changePersonType.js"/>
     </head>
     <body>
         <h1>Alterar Conta</h1>
