@@ -2,7 +2,7 @@
     <head>
         <meta name="layout" content="main" >
         <title>Criação de conta</title>
-        <asset:javascript src="changePersonType.js"/>
+        <asset:javascript src="changepersontype/changePersonType.js"/>
     </head>
     <body>
         <h1>Criação de conta</h1>

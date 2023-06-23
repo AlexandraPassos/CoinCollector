@@ -2,8 +2,8 @@
     <head>
         <meta name="layout" content="main" >
         <title>Registrar Novo Pagador</title>
-        <asset:javascript src="changePersonType.js"/>
-        <asset:javascript src="viaCep.js"/>
+        <asset:javascript src="changepersontype/changePersonType.js"/>
+        <asset:javascript src="viacep/viaCep.js"/>
     </head>
     <body>
         <h1>Registro de Novo Pagador</h1>

@@ -1,5 +1,6 @@
-package com.coinCollector
+package com.coincollector.payer
 
+import com.coincollector.payer.Payer
 import grails.validation.ValidationException
 
 class PayerController {
