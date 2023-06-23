@@ -25,10 +25,10 @@ class PayerController {
             return
         }
 
-        Payer payer = Payer.query([id: id]).get()
-        
+        Payer payer = Payer.query([id: id, includeDeleted: true]).get()
+
         if (!payer) {
-            flash.message = "Pagador não encontrado com o ID informado."
+            flash.message = "Pagador com o ID ${id} não encontrado."
             redirect(action: "index")
             return
         }
