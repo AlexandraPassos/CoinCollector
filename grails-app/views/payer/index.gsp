@@ -32,7 +32,7 @@
                 <th>E-mail</th>
                 <th>CPF/CNPJ</th>
                 <th>Celular</th>
-                <th>Status</th>
+                <th>Situação</th>
             </tr>
             <g:each in="${payerList}" var="payer">
                 <tr>
