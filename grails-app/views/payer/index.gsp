@@ -6,22 +6,21 @@
     </head>
     <body>
         <a href="${ createLink(controller: "payer", action: "create", params: [params]) }" class="btn btn-default">Novo pagador</a>
-
-        <g:form>
-            <label for="payerListFilter">Filtrar:</label>
+        <g:form action = "index">
+            <label for="deletedOnly">Filtrar:</label>
             <g:select
-                    name="payerListFilter"
+                    name="deletedOnly"
                     class="marg-5"
                     data-constraint="select"
                     from="${[
-                            [value: "ACTIVE", label: "Exibir pagadores ativos"],
-                            [value: "INACTIVE", label: "Exibir pagadores inativos"],
-                            [value: "ALL", label: "Exibir todos os pagadores"]
+                            [value: "", label: "Exibir somente pagadores ativos"],
+                            [value: "true", label: "Exibir somente pagadores inativos"],
+                            [value: "false", label: "Exibir todos os pagadores"]
                     ]}"
                     optionKey="value"
                     optionValue="label"
-                    value="${params.payerListFilter}"/>
-            <input type="submit" value="Aplicar"/>
+                    value="${params.deletedOnly}"/>
+            <input type="submit" value="Aplicar" />
         </g:form>
 
         <h1>Lista de Pagadores</h1>

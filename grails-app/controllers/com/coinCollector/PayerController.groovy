@@ -7,19 +7,13 @@ class PayerController {
     def payerService
 
     def index() {
-        Map allowedParams = [
-            customerId: 1,
-            deletedOnly: false,
-            includeDeleted: false
-        ]
+        params.customerId = 1
 
-        if (params.payerListFilter == "INACTIVE") {
-            allowedParams.deletedOnly = true
-        } else if (params.payerListFilter == "ACTIVE") {
-            allowedParams.includeDeleted = true
+        if (params.deletedOnly && !Boolean.valueOf(params.deletedOnly)) {
+            params.includeDeleted = true
         }
 
-        List<Payer> payerList = Payer.query(allowedParams).list()
+        List<Payer> payerList = Payer.query(params).list()
         return [payerList: payerList]
     }
 
