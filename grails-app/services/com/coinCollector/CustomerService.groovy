@@ -12,27 +12,16 @@ import utils.phoneNumber.PhoneNumberUtils
 @Transactional
 class CustomerService {
 
-    public void save(Map params) {
+    public Customer save(Map params) {
+        Map parsedParams = parsedParams(params)
+        Customer validatedCustomer = validateCustomer(parsedParams)
 
-        if(PersonType.convert(params.personType) == PersonType.PF && !CpfCnpjUtils.cpfIsValid(params.cpfCnpj)) return
-        if(PersonType.convert(params.personType) == PersonType.PJ && !CpfCnpjUtils.cnpjIsValid(params.cpfCnpj)) return
-        if(!PhoneNumberUtils.phoneNumberIsValid(params.phoneNumber)) return
-        if(!NameUtils.nameIsValid(params.name)) return
-        if(!EmailUtils.emailIsValid(params.email)) return
+        if (validatedCustomer.hasErrors()) throw new ValidationException(null, validatedCustomer.errors)
 
         Customer customer = new Customer()
-        customer.name = params.name
-        customer.email = params.email
-        customer.personType = params.personType
-        customer.cpfCnpj = params.cpfCnpj
-        customer.cep = params.cep
-        customer.state = params.state
-        customer.city = params.city
-        customer.district = params.district
-        customer.address = params.address
-        customer.addressNumber = params.addressNumber
-        customer.complement = params.complement
-        customer.phoneNumber = params.phoneNumber
+
+        List<String> savableParams = ["name", "email", "personType", "cpfCnpj", "cep", "state", "city", "district", "address", "address", "addressNumber", "complement", "phoneNumber"]
+        customer.properties[savableParams] = parsedParams
         customer.save(failOnError: true)
     }
 
