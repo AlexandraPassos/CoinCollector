@@ -6,12 +6,24 @@
     </head>
     <body>
         <a href="${ createLink(controller: "payer", action: "create", params: [params]) }" class="btn btn-default">Novo pagador</a>
-        <g:if test="${!mustShowDeletedPayers}">
-            <a href="${createLink(controller: "payer", action: "index", params: [mustShowDeletedPayers: true])}">Mostrar pagadores inativos</a>
-        </g:if>
-        <g:else>
-            <a href="${createLink(controller: "payer", action: "index", params: [mustShowDeletedPayers: false])}">Mostrar pagadores ativos</a>
-        </g:else>
+
+        <g:form>
+            <label for="payerListFilter">Filtrar:</label>
+            <g:select
+                    name="payerListFilter"
+                    class="marg-5"
+                    data-constraint="select"
+                    from="${[
+                            [value: "ACTIVE", label: "Exibir pagadores ativos"],
+                            [value: "INACTIVE", label: "Exibir pagadores inativos"],
+                            [value: "ALL", label: "Exibir todos os pagadores"]
+                    ]}"
+                    optionKey="value"
+                    optionValue="label"
+                    value="${params.payerListFilter}"/>
+            <input type="submit" value="Aplicar"/>
+        </g:form>
+
         <h1>Lista de Pagadores</h1>
         <table>
             <tr>
@@ -30,12 +42,13 @@
                     <td>${payer?.cpfCnpj}</td>
                     <td>${payer?.phoneNumber}</td>
                     <td>
-                        <g:if test="${mustShowDeletedPayers}">
+                        <g:if test="${payer.deleted}">
                             Inativo
                         </g:if>
                         <g:else>
                             Ativo
                         </g:else>
+                    </td>
                 </tr>
             </g:each>
         </table>
