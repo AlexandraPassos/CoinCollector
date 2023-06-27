@@ -6,7 +6,7 @@ import grails.validation.ValidationException
 import utils.billingType.BillingType
 import utils.dateFormat.CustomDateUtils
 
-import javax.transaction.Transactional
+import grails.gorm.transactions.Transactional
 
 @Transactional
 class PaymentService {
