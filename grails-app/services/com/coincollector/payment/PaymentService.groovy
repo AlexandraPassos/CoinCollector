@@ -2,11 +2,10 @@ package com.coincollector.payment
 
 import com.coincollector.customer.Customer
 import com.coincollector.payer.Payer
+import grails.gorm.transactions.Transactional
 import grails.validation.ValidationException
 import utils.billingType.BillingType
 import utils.dateFormat.CustomDateUtils
-
-import grails.gorm.transactions.Transactional
 
 @Transactional
 class PaymentService {
@@ -28,7 +27,7 @@ class PaymentService {
         Map parsedParams = params
 
         parsedParams.customer = Customer.findById(1)
-        parsedParams.payer = Payer.get(params.long("payer"))
+        parsedParams.payer = params.long("payer")
         parsedParams.billingType = BillingType.convert(params.billingType)
         parsedParams.value = params.value ? params.value as BigDecimal : 0
         parsedParams.dueDate = CustomDateUtils.fromString(params.dueDate)
@@ -40,7 +39,11 @@ class PaymentService {
         Payment validatedPayment = new Payment()
 
         if (!parsedParams.payer) {
-            validatedPayment.errors.reject("", null, "Erro ao selecionar pagador")
+            validatedPayment.errors.reject("", null, "Pagador não informado")
+        } else if (!Payer.where {id == parsedParams.payer}.get()) {
+            validatedPayment.errors.reject("", null, "Erro ao selecionar pagador com o ID ${parsedParams.payer}")
+        } else if (!Payer.where {id == parsedParams.payer && deleted == false}.get()) {
+            validatedPayment.errors.reject("", null, "Não é possível selecionar pagadores deletados")
         }
 
         if (!parsedParams.billingType) {
