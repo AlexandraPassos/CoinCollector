@@ -31,6 +31,6 @@ class User extends BaseEntity implements Serializable {
     }
 
     static mapping = {
-	    password column: '`password`'
+        password column: '`password`'
     }
 }
