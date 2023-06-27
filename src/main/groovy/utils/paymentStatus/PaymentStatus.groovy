@@ -4,7 +4,7 @@ enum PaymentStatus {
 
     PENDING,
     RECEIVED,
-    EXPIRATED
+    OVERDUE
 
     public static PaymentStatus convert(String paymentStatus) {
         try {
@@ -22,7 +22,7 @@ enum PaymentStatus {
         return this == PaymentStatus.RECEIVED
     }
 
-    public static Boolean isExpirated() {
-        return this == PaymentStatus.EXPIRATED
+    public static Boolean isOverdue() {
+        return this == PaymentStatus.OVERDUE
     }
 }
