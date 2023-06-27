@@ -1,6 +1,6 @@
 package com.coincollector.customer
 
-
+import grails.plugin.springsecurity.annotation.Secured
 import grails.validation.ValidationException
 import utils.message.MessageType
 
@@ -30,6 +30,7 @@ class CustomerController {
         return [customer: customer]
     }
 
+    @Secured(['permitAll'])
     def create() {
         return [:]
     }
@@ -72,6 +73,7 @@ class CustomerController {
         }
     }
 
+    @Secured(['permitAll'])
     def save() {
         try {
             customerService.save(params)

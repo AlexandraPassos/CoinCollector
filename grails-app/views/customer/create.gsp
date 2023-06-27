@@ -18,6 +18,11 @@
             </div>
 
             <div>
+                <label for="password">Senha:</label>
+                <input type="password" name="password" placeholder="Coloque sua senha" id="password">
+            </div>
+
+            <div>
                 <label for="personType">Tipo de Cliente:</label>
                 <input type="radio" name="personType" id="pfRadio" value="PF" onchange="changePersonType()" checked> <label for="pfRadio">Pessoa Física</label>
                 <input type="radio" name="personType" id="pjRadio" value="PJ" onchange="changePersonType()"> <label for="pjRadio">Pessoa Jurídica</label>

@@ -1,6 +1,6 @@
 package com.coincollector.customer
 
-import com.coincollector.customer.Customer
+
 import grails.gorm.transactions.Transactional
 import grails.validation.ValidationException
 import utils.cpfCnpj.CpfCnpjUtils
@@ -13,6 +13,8 @@ import utils.phoneNumber.PhoneNumberUtils
 @Transactional
 class CustomerService {
 
+    def authenticationService
+
     public Customer save(Map params) {
         Map parsedParams = parsedParams(params)
         Customer validatedCustomer = validateCustomer(parsedParams)
@@ -24,6 +26,8 @@ class CustomerService {
         List<String> savableParams = ["name", "email", "personType", "cpfCnpj", "cep", "state", "city", "district", "address", "address", "addressNumber", "complement", "phoneNumber"]
         customer.properties[savableParams] = parsedParams
         customer.save(failOnError: true)
+
+        authenticationService.save(customer, customer.email, params.password)
     }
 
     public Map parsedParams(Map params) {
