@@ -32,7 +32,6 @@
                         noSelection="${['': 'Selecione a forma de pagamento']}"/>
             </div>
 
-
             <div>
                 <label>Data de Vencimento:</label>
                 <input type="date" name="dueDate" id="dueDate">
