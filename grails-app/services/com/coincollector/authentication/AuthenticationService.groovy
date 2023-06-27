@@ -8,7 +8,7 @@ import grails.gorm.transactions.Transactional
 class AuthenticationService {
 
     public void save(Customer customer, String email, String password) {
-        User user    = new User()
+        User user = new User()
         user.customer = customer
         user.username = email
         user.password = password
