@@ -9,7 +9,7 @@ enum BillingType {
     DEBIT_CARD,
     CREDIT_CARD
 
-    public static BillingType convert(String billingType) {
+    public static BillingType convert(billingType) {
         try {
             return billingType.toUpperCase() as BillingType
         } catch (Exception exception) {
