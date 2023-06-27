@@ -28,30 +28,10 @@ class PaymentService {
         Map parsedParams = params
 
         parsedParams.customer = Customer.findById(1)
-
-        if (!params.payer) {
-            throw new Exception("O campo pagador é obrigatório")
-        } else {
-            parsedParams.payer = Payer.get(params.long("payer"))
-        }
-
-        if (!params.billingType) {
-            throw new Exception("O tipo de pagamento é obrigatório")
-        } else {
-            parsedParams.billingType = BillingType.convert(params.billingType)
-        }
-
-        if (!parsedParams.value) {
-            throw new Exception("O campo valor é obrigatório")
-        } else {
-            parsedParams.value = params.value as BigDecimal
-        }
-
-        if (!parsedParams.dueDate) {
-            throw new Exception("O campo data é obrigatório")
-        } else {
-            parsedParams.dueDate = CustomDateUtils.fromString(params.dueDate)
-        }
+        parsedParams.payer = Payer.get(params.long("payer"))
+        parsedParams.billingType = BillingType.convert(params.billingType)
+        parsedParams.value = params.value ? params.value as BigDecimal : 0
+        parsedParams.dueDate = CustomDateUtils.fromString(params.dueDate)
 
         return parsedParams
     }
@@ -59,13 +39,25 @@ class PaymentService {
     private Payment validatePayment(Map parsedParams) {
         Payment validatedPayment = new Payment()
 
-        if (parsedParams.value <= BigDecimal.ZERO) {
-            validatedPayment.errors.reject("", null, "Valor da cobrança inválido")
+        if (!parsedParams.payer) {
+            validatedPayment.errors.reject("", null, "Erro ao selecionar pagador")
+        }
+
+        if (!parsedParams.billingType) {
+            validatedPayment.errors.reject("", null, "Forma de pagamento inválida")
         }
 
         Date today = new Date()
-        if (parsedParams.dueDate < today) {
+        if (!parsedParams.dueDate) {
+            validatedPayment.errors.reject("", null, "Data de vencimento inválida")
+        } else if (parsedParams.dueDate < today) {
             validatedPayment.errors.reject("", null, "A data de vencimento não pode ser inferior ao dia de hoje.")
+        }
+
+        if (!parsedParams.value) {
+            validatedPayment.errors.reject("", null, "Valor da cobrança inválida")
+        } else if (parsedParams.value <= BigDecimal.ZERO) {
+            validatedPayment.errors.reject("", null, "Valor da cobrança não pode ser menor ou igual a zero")
         }
 
         return validatedPayment
