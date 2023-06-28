@@ -5,7 +5,7 @@ import com.coincollector.customer.Customer
 import grails.gorm.transactions.Transactional
 
 @Transactional
-class AuthenticationService {
+class UserService {
 
     public void save(Customer customer, String email, String password) {
         User user = new User()

@@ -13,7 +13,7 @@ import utils.phoneNumber.PhoneNumberUtils
 @Transactional
 class CustomerService {
 
-    def authenticationService
+    def userService
 
     public Customer save(Map params) {
         Map parsedParams = parsedParams(params)
@@ -27,7 +27,7 @@ class CustomerService {
         customer.properties[savableParams] = parsedParams
         customer.save(failOnError: true)
 
-        authenticationService.save(customer, customer.email, params.password)
+        userService.save(customer, customer.email, params.password)
     }
 
     public Map parsedParams(Map params) {
