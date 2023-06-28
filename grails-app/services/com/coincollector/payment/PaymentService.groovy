@@ -27,7 +27,7 @@ class PaymentService {
         Map parsedParams = params
 
         parsedParams.customer = Customer.findById(1)
-        parsedParams.payer = params.long("payer")
+        parsedParams.payer = Payer.findById(params.payerId)
         parsedParams.billingType = BillingType.convert(params.billingType)
         parsedParams.value = params.value ? params.value as BigDecimal : 0
         parsedParams.dueDate = CustomDateUtils.fromString(params.dueDate)
@@ -39,11 +39,7 @@ class PaymentService {
         Payment validatedPayment = new Payment()
 
         if (!parsedParams.payer) {
-            validatedPayment.errors.reject("", null, "Pagador não informado")
-        } else if (!Payer.where {id == parsedParams.payer}.get()) {
-            validatedPayment.errors.reject("", null, "Erro ao selecionar pagador com o ID ${parsedParams.payer}")
-        } else if (!Payer.where {id == parsedParams.payer && deleted == false}.get()) {
-            validatedPayment.errors.reject("", null, "Não é possível selecionar pagadores deletados")
+            validatedPayment.errors.reject("", null, "Erro ao selecionar pagador")
         }
 
         if (!parsedParams.billingType) {

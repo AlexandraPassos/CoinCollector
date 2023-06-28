@@ -12,7 +12,7 @@
             <div>
                 <label>Pagador:</label>
                 <g:select
-                        name="payer"
+                        name="payerId"
                         data-constraint="select"
                         from="${payerList}"
                         optionKey="id"
