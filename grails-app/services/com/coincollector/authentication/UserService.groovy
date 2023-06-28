@@ -8,8 +8,8 @@ import grails.validation.ValidationException
 @Transactional
 class UserService {
 
-    public void save(Customer customer, String email, String password) {
-        User validatedPassword = validatePassword(password)
+    public void save(Customer customer, String email, String password, String confirmPassword) {
+        User validatedPassword = validatePassword(password, confirmPassword)
 
         if (validatedPassword.hasErrors()) throw new ValidationException(null, validatedPassword.errors)
 
@@ -21,11 +21,15 @@ class UserService {
         user.save(failOnError: true)
     }
 
-    private User validatePassword(password) {
+    private User validatePassword(password, confirmPassword) {
         User validatedPassword = new User()
 
         if (!password) {
             validatedPassword.errors.reject("", null, "O campo senha é obrigatório")
+        }
+
+        if (password != confirmPassword) {
+            validatedPassword.errors.reject("", null, "As senhas não correspondem")
         }
 
         return validatedPassword

@@ -27,7 +27,7 @@ class CustomerService {
         customer.properties[savableParams] = parsedParams
         customer.save(failOnError: true)
 
-        userService.save(customer, customer.email, params.password)
+        userService.save(customer, customer.email, params.password, params.confirmPassword)
     }
 
     public Map parsedParams(Map params) {

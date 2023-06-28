@@ -19,7 +19,12 @@
 
             <div>
                 <label for="password">Senha:</label>
-                <input type="password" name="password" placeholder="Coloque sua senha" id="password">
+                <input type="password" name="password" placeholder="Digite sua senha" id="password">
+            </div>
+
+            <div>
+                <label for="password">Confirmar senha:</label>
+                <input type="password" name="confirmPassword" placeholder="Digite novamente sua senha" id="confirmPassword">
             </div>
 
             <div>
