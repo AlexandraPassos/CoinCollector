@@ -31,6 +31,8 @@ class Payment extends BaseEntity {
         query { Map search ->
             if (search.containsKey("id")) eq("id", Long.valueOf(search.id))
 
+            if (search.containsKey("status")) eq("status", search.status)
+
             if (search.containsKey("customerId")) eq("customer.id", Long.valueOf(search.customerId))
 
             if (search.containsKey("payerId")) eq("payer.id", Long.valueOf(search.payerId))

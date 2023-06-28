@@ -3,13 +3,39 @@ package com.coincollector.payment
 import com.coincollector.payer.Payer
 import grails.validation.ValidationException
 import utils.message.MessageType
+import utils.paymentStatus.PaymentStatus
 
 class PaymentController {
 
     def paymentService
 
     def index() {
-        return [:]
+        List<Payer> payerList = Payer.query(customerId: 1).list()
+        List<Payment> paymentList = Payment.query(customerId: 1).list()
+
+        if (params.status != '') {
+            paymentList = Payment.query(customerId: 1, status: PaymentStatus.convert(params.status)).list()
+        }
+        return [paymentList: paymentList, payerList: payerList]
+    }
+
+    def show(Long id) {
+        if (!id) {
+            flash.message = "Erro ao buscar cobrança. ID não informado."
+            redirect(action: "index")
+            return
+        }
+
+        Payment payment = Payment.query([id: id]).get()
+        Payer payer= Payer.query([id: id]).get()
+
+        if (!payment) {
+            flash.message = "Cobrança com o ID ${id} não encontrado."
+            redirect(action: "index")
+            return
+        }
+
+        return [payment: payment, payer: payer]
     }
 
     def save() {
