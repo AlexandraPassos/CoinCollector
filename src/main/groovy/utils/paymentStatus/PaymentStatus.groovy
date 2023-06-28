@@ -13,16 +13,4 @@ enum PaymentStatus {
             return null
         }
     }
-
-    public static Boolean isPending() {
-        return this == PaymentStatus.PENDING
-    }
-
-    public static Boolean isReceived() {
-        return this == PaymentStatus.RECEIVED
-    }
-
-    public static Boolean isOverdue() {
-        return this == PaymentStatus.OVERDUE
-    }
 }
