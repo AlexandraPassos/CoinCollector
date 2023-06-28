@@ -39,7 +39,7 @@ class PaymentService {
         Payment validatedPayment = new Payment()
 
         if (!parsedParams.payer) {
-            validatedPayment.errors.reject("", null, "Erro ao selecionar pagador")
+            validatedPayment.errors.reject("", null, "Pagador não encontrado")
         }
 
         if (!parsedParams.billingType) {
