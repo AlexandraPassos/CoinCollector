@@ -23,7 +23,7 @@
             </div>
 
             <div>
-                <label for="password">Confirmar senha:</label>
+                <label for="password">Confirme sua senha:</label>
                 <input type="password" name="confirmPassword" placeholder="Digite novamente sua senha" id="confirmPassword">
             </div>
 
