@@ -25,7 +25,7 @@ class PaymentController {
         }
 
         Payment payment = Payment.query([id: id]).get()
-        Payer payer= Payer.query([id: id]).get()
+        Payer payer = Payer.query([id: id]).get()
 
         if (!payment) {
             flash.message = "Cobrança com o ID ${id} não encontrado."
