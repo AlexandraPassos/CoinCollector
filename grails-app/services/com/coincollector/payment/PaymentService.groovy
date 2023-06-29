@@ -6,6 +6,7 @@ import grails.gorm.transactions.Transactional
 import grails.validation.ValidationException
 import utils.billingType.BillingType
 import utils.dateFormat.CustomDateUtils
+import utils.paymentStatus.PaymentStatus
 
 @Transactional
 class PaymentService {
@@ -20,6 +21,16 @@ class PaymentService {
 
         List<String> savableParams = ["customer", "payer", "billingType", "value", "dueDate"]
         payment.properties[savableParams] = parsedParams
+        payment.save(failOnError: true)
+    }
+
+    public Payment updateToReceived(Long id) {
+        Payment payment = Payment.query([id: id]).get()
+        if (payment.status == PaymentStatus.RECEIVED) {
+            payment.errors.reject("", null, "A cobrança já foi recebida")
+            throw new ValidationException(null, payment.errors)
+        }
+        payment.status = PaymentStatus.RECEIVED
         payment.save(failOnError: true)
     }
 
