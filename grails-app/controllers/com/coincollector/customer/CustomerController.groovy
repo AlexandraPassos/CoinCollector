@@ -1,6 +1,6 @@
 package com.coincollector.customer
 
-
+import grails.plugin.springsecurity.annotation.Secured
 import grails.validation.ValidationException
 import utils.message.MessageType
 
@@ -12,6 +12,7 @@ class CustomerController {
         return [:]
     }
 
+    @Secured(['IS_AUTHENTICATED_FULLY'])
     def show(Long id) {
         if (!id) {
             flash.message = "Erro ao buscar cliente. ID não informado."
@@ -30,10 +31,12 @@ class CustomerController {
         return [customer: customer]
     }
 
+    @Secured(['permitAll'])
     def create() {
         return [:]
     }
 
+    @Secured(['IS_AUTHENTICATED_FULLY'])
     def edit() {
         Long id = params.long("id")
         if (!id) {
@@ -54,6 +57,7 @@ class CustomerController {
         return params
     }
 
+    @Secured(['IS_AUTHENTICATED_FULLY'])
     def update(Long id) {
         try {
             customerService.update(id, params)
@@ -72,6 +76,7 @@ class CustomerController {
         }
     }
 
+    @Secured(['permitAll'])
     def save() {
         try {
             customerService.save(params)
