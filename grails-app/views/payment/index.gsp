@@ -16,6 +16,7 @@
                     class="marg-5"
                     data-constraint="select"
                     from="${PaymentStatus.values()}"
+                    value="${params.status}"
                     valueMessagePrefix="ENUM.PaymentStatus"
                     noSelection="${['': '']}"/>
             <input type="submit" value="Aplicar"/>

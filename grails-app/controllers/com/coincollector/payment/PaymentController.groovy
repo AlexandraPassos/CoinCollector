@@ -3,19 +3,17 @@ package com.coincollector.payment
 import com.coincollector.payer.Payer
 import grails.validation.ValidationException
 import utils.message.MessageType
-import utils.paymentStatus.PaymentStatus
 
 class PaymentController {
 
     def paymentService
 
     def index() {
-        List<Payer> payerList = Payer.query(customerId: 1).list()
-        List<Payment> paymentList = Payment.query(customerId: 1).list()
+        Map search = params.findAll { it.value }
 
-        if (params.status != '') {
-            paymentList = Payment.query(customerId: 1, status: PaymentStatus.convert(params.status)).list()
-        }
+        List<Payer> payerList = Payer.query([customerId: 1]).list()
+        List<Payment> paymentList = Payment.query([customerId: 1] + search).list()
+
         return [paymentList: paymentList, payerList: payerList]
     }
 
