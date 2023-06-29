@@ -18,7 +18,7 @@
                     from="${PaymentStatus.values()}"
                     value="${params.status}"
                     valueMessagePrefix="ENUM.PaymentStatus"
-                    noSelection="${['': '']}"/>
+                    noSelection="${['': 'Todos']}"/>
             <input type="submit" value="Aplicar"/>
         </g:form>
         <h1>Lista de Cobranças</h1>
