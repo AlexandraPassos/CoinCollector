@@ -1,7 +1,6 @@
 package com.coincollector.payer
 
 import com.coincollector.customer.Customer
-import com.coincollector.payer.Payer
 import grails.gorm.transactions.Transactional
 import utils.cpfCnpj.CpfCnpjUtils
 import utils.email.EmailUtils
@@ -13,12 +12,12 @@ import utils.phoneNumber.PhoneNumberUtils
 @Transactional
 class PayerService {
 
-    public void save(Map params) {
-        if(PersonType.convert(params.personType) == PersonType.PF && !CpfCnpjUtils.cpfIsValid(params.cpfCnpj)) return
-        if(PersonType.convert(params.personType) == PersonType.PJ && !CpfCnpjUtils.cnpjIsValid(params.cpfCnpj)) return 
-        if(!PhoneNumberUtils.phoneNumberIsValid(params.phoneNumber)) return
-        if(!NameUtils.nameIsValid(params.name)) return
-        if(!EmailUtils.emailIsValid(params.email)) return
+    public void save(Map params, Customer customer) {
+        if (PersonType.convert(params.personType) == PersonType.PF && !CpfCnpjUtils.cpfIsValid(params.cpfCnpj)) return
+        if (PersonType.convert(params.personType) == PersonType.PJ && !CpfCnpjUtils.cnpjIsValid(params.cpfCnpj)) return
+        if (!PhoneNumberUtils.phoneNumberIsValid(params.phoneNumber)) return
+        if (!NameUtils.nameIsValid(params.name)) return
+        if (!EmailUtils.emailIsValid(params.email)) return
 
         Payer payer = new Payer()
         payer.name = params.name
@@ -33,7 +32,7 @@ class PayerService {
         payer.addressNumber = FormattingParameters.removeSpecialCharacters(params.addressNumber)
         payer.complement = params.complement
         payer.phoneNumber = FormattingParameters.removeSpecialCharacters(params.phoneNumber)
-        payer.customer = Customer.findById(1)
+        payer.customer = customer
         payer.save(failOnError: true)
     }
   
@@ -56,18 +55,18 @@ class PayerService {
         payer.phoneNumber = FormattingParameters.removeSpecialCharacters(params.phoneNumber)
         payer.save(failOnError: true)
     }
-  
-    public void delete(Long id) {
+
+    public void delete(Long id, Customer currentCustomer) {
         if (!id) throw new Exception("ID do pagador não informado")
-        Payer payer = Payer.query([id: id]).get()
+        Payer payer = Payer.findByCustomerAndId(currentCustomer, id)
         if (!payer) throw new Exception("Pagador com o ID ${id} não encontrado.")
         payer.deleted = true
-        payer.save(failOnError: true) 
+        payer.save(failOnError: true)
     }
 
-    public void restore(Long id) {
+    public void restore(Long id, Customer currentCustomer) {
         if (!id) throw new Exception("ID do pagador não informado")
-        Payer payer = Payer.query([id: id]).get()
+        Payer payer = Payer.findByCustomerAndId(currentCustomer, id)
         if (!payer) throw new Exception("Pagador com o ID ${id} não encontrado.")
         payer.deleted = false
         payer.save(failOnError: true)
