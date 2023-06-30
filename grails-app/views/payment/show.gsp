@@ -1,4 +1,3 @@
-!DOCTYPE html>
 <%@  page import="utils.billingType.BillingType" %>
 <%@  page import="utils.paymentStatus.PaymentStatus" %>
 <html>
