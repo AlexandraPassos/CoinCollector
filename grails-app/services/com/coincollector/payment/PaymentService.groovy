@@ -26,10 +26,12 @@ class PaymentService {
 
     public Payment updateToReceived(Long id) {
         Payment payment = Payment.query([id: id]).get()
+
         if (payment.status == PaymentStatus.RECEIVED) {
             payment.errors.reject("", null, "A cobrança já foi recebida")
             throw new ValidationException(null, payment.errors)
         }
+
         payment.status = PaymentStatus.RECEIVED
         payment.save(failOnError: true)
     }
