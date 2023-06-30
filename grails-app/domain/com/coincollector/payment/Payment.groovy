@@ -36,6 +36,17 @@ class Payment extends BaseEntity {
             if (search.containsKey("customerId")) eq("customer.id", Long.valueOf(search.customerId))
 
             if (search.containsKey("payerId")) eq("payer.id", Long.valueOf(search.payerId))
+
+            if (search.containsKey("column")) {
+                projections {
+                    property "${search.column}"
+                }
+            }
+
+            if (search.containsKey("beforeDueDate")) lt("dueDate", search."beforeDueDate")
+
+            if (search.containsKey("onlyPendingPayments")) eq("status", PaymentStatus.PENDING)
+
         }
     }
 }
