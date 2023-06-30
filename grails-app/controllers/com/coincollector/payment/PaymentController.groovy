@@ -11,10 +11,9 @@ class PaymentController {
     def index() {
         Map search = params.findAll { it.value }
 
-        List<Payer> payerList = Payer.query([customerId: 1]).list()
         List<Payment> paymentList = Payment.query([customerId: 1] + search).list()
 
-        return [paymentList: paymentList, payerList: payerList]
+        return [paymentList: paymentList, payerList: params.payer]
     }
 
     def show(Long id) {
