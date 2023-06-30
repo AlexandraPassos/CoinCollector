@@ -78,4 +78,24 @@ class PaymentService {
 
         return validatedPayment
     }
+
+    public void jobPendingToOverdue(){
+        List<Long> pendingPaymentsIdList = Payment.query(["column": "id", "beforeDueDate": new Date(), "onlyPendingPayments": true]).list()
+
+        if (pendingPaymentsIdList.isEmpty()) return
+
+        for (Long paymentId : pendingPaymentsIdList) {
+            Payment.withNewTransaction { status ->
+                try {
+                    Payment payment = Payment.get(paymentId)
+                    payment.status = PaymentStatus.OVERDUE
+
+                    payment.save(failOnError: true)
+                } catch (Exception exception) {
+                    log.error("updatePendingPaymentStatus >> Erro ao atualizar status da cobrança de id: [${paymentId}] [Mensagem de erro]: ${exception.message}")
+                    status.setRollbackOnly()
+                }
+            }
+        }
+    }
 }
