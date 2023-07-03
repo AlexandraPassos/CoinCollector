@@ -22,23 +22,28 @@
             <input type="submit" value="Aplicar"/>
         </g:form>
         <h1>Lista de Cobranças</h1>
-        <table>
-            <tr>
-                <th>Pagador</th>
-                <th>Forma de Pagamento</th>
-                <th>Data de Vencimento</th>
-                <th>Valor</th>
-                <th>Situação</th>
-            </tr>
-            <g:each in="${paymentList}" var="payment">
+        <g:if test="${ !paymentList }">
+            <g:message message="Não existe nenhuma cobrança com a situação atual"/>
+        </g:if>
+        <g:else>
+            <table>
                 <tr>
-                    <td><a href="${createLink(controller: 'payer', action: 'show', params: [id: payment.payerId])}">${payment.payer.name}</a></td>
-                    <td><g:message code="ENUM.BillingType.${payment?.billingType}"/></td>
-                    <td><g:formatDate format="dd/MM/yyyy" date="${payment?.dueDate}"/></td>
-                    <td><g:formatNumber number="${payment?.value}" type="currency" currencyCode="BRL"/></td>
-                    <td><a href="${createLink(controller: 'payment', action: 'show', params: [id: payment.id])}"><g:message code="ENUM.PaymentStatus.${payment?.status}"/></a></td>
+                    <th>Pagador</th>
+                    <th>Forma de Pagamento</th>
+                    <th>Data de Vencimento</th>
+                    <th>Valor</th>
+                    <th>Situação</th>
                 </tr>
-            </g:each>
-        </table>
+                <g:each in="${paymentList}" var="payment">
+                    <tr>
+                        <td><a href="${createLink(controller: 'payer', action: 'show', params: [id: payment.payerId])}">${payment.payer.name}</a></td>
+                        <td><g:message code="ENUM.BillingType.${payment.billingType}"/></td>
+                        <td><g:formatDate format="dd/MM/yyyy" date="${payment.dueDate}"/></td>
+                        <td><g:formatNumber number="${payment.value}" type="currency" currencyCode="BRL"/></td>
+                        <td><a href="${createLink(controller: 'payment', action: 'show', params: [id: payment.id])}"><g:message code="ENUM.PaymentStatus.${payment.status}"/></a></td>
+                    </tr>
+                </g:each>
+            </table>
+        </g:else>
     </body>
 </html>
