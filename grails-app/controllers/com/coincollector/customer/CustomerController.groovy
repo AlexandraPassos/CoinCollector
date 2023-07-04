@@ -2,9 +2,10 @@ package com.coincollector.customer
 
 import grails.plugin.springsecurity.annotation.Secured
 import grails.validation.ValidationException
+import utils.controller.BaseController
 import utils.message.MessageType
 
-class CustomerController {
+class CustomerController extends BaseController {
 
     def customerService
 
@@ -28,7 +29,14 @@ class CustomerController {
             return
         }
 
-        return [customer: customer]
+        Customer currentCustomer = getCurrentCustomer()
+        if (currentCustomer.id != customer.id) {
+            flash.message = "Você não tem permissão para ver este cliente."
+            redirect(action: 'index')
+            return
+        }
+
+        return [customer: getCurrentCustomer()]
     }
 
     @Secured(['permitAll'])
@@ -53,6 +61,13 @@ class CustomerController {
             return
         }
 
+        Customer currentCustomer = getCurrentCustomer()
+        if (currentCustomer.id != customer.id) {
+            flash.message = "Você não tem permissão para editar este cliente."
+            redirect(action: 'index')
+            return
+        }
+
         Map params = [customer: customer]
         return params
     }
@@ -60,18 +75,28 @@ class CustomerController {
     @Secured(['IS_AUTHENTICATED_FULLY'])
     def update(Long id) {
         try {
+            Customer currentCustomer = getCurrentCustomer()
+            if (currentCustomer.id != id) {
+                throw new Exception("Você não tem permissão para atualizar este cliente.")
+            }
+
             customerService.update(id, params)
+
             flash.message = "Cliente atualizado com sucesso"
             flash.type = MessageType.SUCCESS
+
             redirect(action: 'show', id: id)
         } catch (ValidationException validationException) {
             flash.message = message(error: validationException.errors.allErrors[0])
             flash.type = MessageType.ERROR
+
             redirect(action: 'edit', id: id)
         } catch (Exception exception) {
             log.error("CustomerController.update >> Erro ao atualizar conta.", exception)
+
             flash.message = "Erro ao atualizar conta"
             flash.type = MessageType.ERROR
+
             redirect(action: 'edit', id: id)
         }
     }
