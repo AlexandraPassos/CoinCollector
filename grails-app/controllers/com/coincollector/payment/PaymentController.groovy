@@ -9,7 +9,30 @@ class PaymentController {
     def paymentService
 
     def index() {
-        return [:]
+        Map search = params.findAll { it.value }
+
+        List<Payment> paymentList = Payment.query([customerId: 1] + search).list()
+
+        return [paymentList: paymentList, payerList: params.payer]
+    }
+
+    def show(Long id) {
+        if (!id) {
+            flash.message = "Erro ao buscar cobrança. ID não informado."
+            redirect(action: "index")
+            return
+        }
+
+        Payment payment = Payment.query([id: id]).get()
+        Payer payer = Payer.query([id: id]).get()
+
+        if (!payment) {
+            flash.message = "Cobrança com o ID ${id} não encontrado."
+            redirect(action: "index")
+            return
+        }
+
+        return [payment: payment, payer: payer]
     }
 
     def save() {

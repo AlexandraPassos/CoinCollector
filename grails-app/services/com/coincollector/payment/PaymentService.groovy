@@ -27,7 +27,6 @@ class PaymentService {
         Map parsedParams = params
 
         parsedParams.customer = Customer.findById(1)
-        parsedParams.payer = Payer.findById(params.payerId)
         parsedParams.billingType = BillingType.convert(params.billingType)
         parsedParams.value = params.value ? params.value as BigDecimal : 0
         parsedParams.dueDate = CustomDateUtils.fromString(params.dueDate)
@@ -37,6 +36,13 @@ class PaymentService {
 
     private Payment validatePayment(Map parsedParams) {
         Payment validatedPayment = new Payment()
+
+        if (!parsedParams.payerId) {
+            validatedPayment.errors.reject("", null, "Id do pagador não encontrado")
+            return validatedPayment
+        }
+
+        parsedParams.payer = Payer.query([id: parsedParams.payerId]).get()
 
         if (!parsedParams.payer) {
             validatedPayment.errors.reject("", null, "Pagador não encontrado")

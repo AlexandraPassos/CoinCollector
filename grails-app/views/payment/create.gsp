@@ -39,7 +39,7 @@
 
             <div>
                 <label>Valor a Receber:</label>
-                <input type="text" name="value" id="value">
+                <input type="number" name="value" id="value">
             </div>
 
             <button type="submit">Salvar</button>
