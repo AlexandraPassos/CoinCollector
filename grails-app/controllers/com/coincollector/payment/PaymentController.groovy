@@ -58,6 +58,23 @@ class PaymentController {
         }
     }
 
+    def update(Long id) {
+        try {
+            paymentService.updateToReceived(id)
+            flash.message = "Cobrança confirmada com sucesso"
+            flash.type = MessageType.SUCCESS
+        } catch (ValidationException validationException) {
+            flash.message = message(error: validationException.errors.allErrors[0])
+            flash.type = MessageType.ERROR
+        } catch (Exception exception) {
+            log.error("CustomerController.update >> Erro ao confirmar cobrança", exception)
+            flash.message = "Erro ao confirmar cobrança"
+            flash.type = MessageType.ERROR
+        } finally {
+            redirect(action: 'show', id: id)
+        }
+    }
+
     def create() {
         List<Payer> payerList = Payer.query([customerId: 1, deleted: false]).list()
         return [payerList: payerList]

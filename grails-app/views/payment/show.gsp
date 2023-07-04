@@ -38,6 +38,10 @@
                             <span><g:message code="ENUM.PaymentStatus.${payment?.status}"/></span>
                         </div>
 
+                        <g:if test="${payment.status != PaymentStatus.RECEIVED}">
+                            <a href="${createLink(controller: "payment", action: "update", params: [id: payment.id])}"
+                               class="btn btn-default">Recebido!</a>
+                        </g:if>
                     </div>
                 </section>
             </div>
